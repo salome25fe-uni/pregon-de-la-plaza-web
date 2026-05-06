@@ -7,23 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Fredoka:wght@400;500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="nav-brutal">
   <a href="index.html" class="nav-logo-link">
-    <img src="IMAGENES/logo.png" alt="Logo Pregón de la Plaza" class="nav-logo">
+    <img src="imagenes/logo (Grande).png" alt="Logo Pregón de la Plaza" class="nav-logo">
   </a>
   
-  <button class="menu-trigger" id="menuTrigger" aria-label="Abrir menú">
-    <span class="menu-text">MENÚ</span>
-    <div class="icon-wrap">
-        <svg viewBox="0 0 100 100" fill="currentColor">
-            <path d="M70,30 L30,50 L70,70 L70,30 Z M20,45 L20,55 L25,55 L25,45 L20,45 Z"></path>
-        </svg>
-    </div>
-  </button>
+  <!-- Reemplaza el botón anterior por este -->
+<button class="fruit-trigger" id="menuTrigger" aria-label="Abrir menú">
+    <!-- SVG Geométrico del Tomate dibujado con código -->
+    <svg viewBox="0 0 100 100" width="65" height="65" xmlns="http://www.w3.org/2000/svg" class="fruit-icon">
+        <!-- Cuerpo del tomate (Polígono irregular estilo cartelismo) -->
+        <polygon points="30,90 12,65 15,30 40,15 75,20 90,45 80,80 55,95" fill="#de0636" />
+        <!-- Tallo verde (Estrella irregular) -->
+        <polygon points="45,15 52,28 75,22 60,38 72,55 52,48 48,65 40,48 20,50 35,38 22,22 40,28" fill="#118a5f" />
+    </svg>
+</button>
 </header>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -35,9 +37,9 @@
           <p class="menu-desc">La memoria visual y el bullicio de nuestros mercados, guardados pa' que no se pierdan.</p>
         </div>
         <div class="hover-tiles">
-          <img src="IMAGENES/NIña.JPG" class="tile tile-1" alt="Archivo visual">
-          <img src="IMAGENES/Carga 1.JPG" class="tile tile-2" alt="Documentación">
-          <img src="IMAGENES/Hojas.JPG" class="tile tile-3" alt="Saberes">
+          <img src="imagenes/NIña (Grande).JPG" class="tile tile-1" alt="Archivo visual">
+          <img src="imagenes/Carga 1 (Grande).JPG" class="tile tile-2" alt="Documentación">
+          <img src="imagenes/Hojas (Grande).JPG" class="tile tile-3" alt="Saberes">
         </div>
       </li>
       <li class="menu-item">
@@ -46,9 +48,9 @@
           <p class="menu-desc">Paseate por las galerías y mercados que le dan de comer a todo el Eje Cafetero.</p>
         </div>
         <div class="hover-tiles">
-          <img src="IMAGENES/cajas moradas.JPG" class="tile tile-1" alt="Plaza 1">
-          <img src="IMAGENES/Carro.JPG" class="tile tile-2" alt="Plaza 2">
-          <img src="IMAGENES/Papas y cajas.JPG" class="tile tile-3" alt="Plaza 3">
+          <img src="imagenes/cajas moradas (Grande).JPG" class="tile tile-1" alt="Plaza 1">
+          <img src="imagenes/Carro (Grande).JPG" class="tile tile-2" alt="Plaza 2">
+          <img src="imagenes/Papa y canasta (Grande).JPG" class="tile tile-3" alt="Plaza 3">
         </div>
       </li>
       <li class="menu-item">
@@ -100,7 +102,7 @@
 </div>
 
 <section class="hero gsap-reveal">
-  <img src="IMAGENES/Carga 1.JPG" alt="Trabajador en la plaza de mercado" class="hero-bg-img">
+  <img src="imagenes/Carga 1 (Grande).JPG" alt="Trabajador en la plaza de mercado" class="hero-bg-img">
   <div class="hero-overlay"></div>
   
   <div class="hero-content">
