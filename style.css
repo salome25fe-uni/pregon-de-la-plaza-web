@@ -1503,3 +1503,177 @@ button {
     box-shadow: -15px 15px 0px var(--yellow);
   }
 }
+
+/* ============================================
+   SECCIÓN FANZINE (LA POSTAL BRUTALISTA)
+   ============================================ */
+
+.fanzine-teaser {
+  background: var(--carbon); /* Fondo oscuro para que la postal resalte muchísimo */
+  padding: 120px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(var(--rgb-bone), 0.1);
+}
+
+.postal-card-wrapper {
+  perspective: 1500px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* La tarjeta física de la postal */
+.postal-card {
+  background: var(--bone);
+  display: flex;
+  border: 15px solid var(--bone); /* Marco blanco como las fotos viejas */
+  border-radius: 4px;
+  /* Sombra gigante de tarjeta apoyada en la mesa */
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  transform: rotateZ(3deg) rotateY(-5deg); /* Tirada de forma casual */
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease;
+  cursor: crosshair;
+}
+
+/* Interacción: al pasar el mouse, la postal se "levanta" para que la leas */
+.postal-card-wrapper:hover .postal-card {
+  transform: rotateZ(0deg) rotateY(0deg) scale(1.02);
+  box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+}
+
+/* --- Mitad Izquierda (Foto) --- */
+.postal-left {
+  flex: 1;
+  position: relative;
+  /* La línea del medio de la postal */
+  border-right: 3px dashed rgba(var(--rgb-carbon), 0.3); 
+  padding-right: 30px;
+}
+
+.postal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 450px;
+  filter: sepia(30%) contrast(1.1); /* Toque nostálgico/antiguo */
+  transition: filter 0.5s ease;
+}
+
+.postal-card-wrapper:hover .postal-img {
+  filter: sepia(0%) contrast(1.1); /* Recupera el color original al leerla */
+}
+
+.postal-tag {
+  position: absolute;
+  bottom: 20px;
+  left: -10px;
+  background: var(--yellow);
+  color: var(--carbon);
+  font-family: var(--font-disp);
+  font-size: 14px;
+  padding: 6px 12px;
+  transform: rotate(-5deg);
+  border: 2px solid var(--carbon);
+  box-shadow: 4px 4px 0px var(--carbon);
+}
+
+/* --- Mitad Derecha (Texto y Mensaje) --- */
+.postal-right {
+  flex: 1;
+  padding: 20px 0 20px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.postal-stamps {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* El sello postal falso */
+.stamp-square {
+  border: 3px solid var(--red);
+  color: var(--red);
+  font-family: var(--font-disp);
+  font-size: 12px;
+  text-align: center;
+  padding: 10px 15px;
+  line-height: 1.1;
+  transform: rotate(12deg);
+  letter-spacing: 0.1em;
+}
+
+.postal-message .section-headline-xl {
+  font-size: clamp(40px, 4vw, 60px);
+  line-height: 0.9;
+  margin-bottom: 20px;
+}
+
+/* ¡El mensaje con letra a mano! */
+.fanzine-handwriting {
+  font-family: var(--font-script);
+  font-size: 28px;
+  line-height: 1.4;
+  color: var(--carbon-light);
+  margin-bottom: 30px;
+  padding-right: 20px;
+}
+
+.postal-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Las líneas donde se escribiría la dirección */
+.postal-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 90%;
+}
+
+.postal-lines span {
+  display: block;
+  height: 2px;
+  background: rgba(var(--rgb-carbon), 0.15);
+  width: 100%;
+}
+
+/* Adaptación del botón */
+.btn-carbon-hover {
+  background-color: var(--carbon) !important;
+  color: var(--bone) !important;
+  border: 2px solid var(--carbon);
+  align-self: flex-start;
+}
+.btn-carbon-hover:hover {
+  background-color: var(--green) !important; /* Estalla en verde plaza */
+  border-color: var(--green);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 960px) {
+  .postal-card {
+    flex-direction: column;
+    transform: none; /* En celular la mostramos recta */
+  }
+  .postal-card-wrapper:hover .postal-card {
+    transform: none;
+  }
+  .postal-left {
+    border-right: none;
+    border-bottom: 3px dashed rgba(var(--rgb-carbon), 0.3);
+    padding-right: 0;
+    padding-bottom: 30px;
+  }
+  .postal-right {
+    padding: 30px 0 0 0;
+  }
+}
