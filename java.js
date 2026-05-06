@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         animTicker();
     }
-
     // ============================================
     // 3. INTERACCIÓN HERO: EL LENTE DE LA MEMORIA
     // ============================================
@@ -186,6 +185,31 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+    // ============================================
+    // ANIMACIÓN DE DATOS: CONTADORES NUMÉRICOS
+    // ============================================
+    const metricNumbers = document.querySelectorAll('.metric-num');
+    
+    metricNumbers.forEach((metric) => {
+        // Guardamos el número real que pusiste en el HTML (5, 480, 14)
+        const targetValue = parseInt(metric.innerText);
+        
+        // GSAP se encarga de contar desde 0 hasta ese número
+        gsap.fromTo(metric, 
+            { innerText: 0 }, 
+            {
+                innerText: targetValue,
+                duration: 2.5, // Cuánto tarda en contar
+                ease: "power3.out",
+                snap: { innerText: 1 }, // Fuerza a que sean números enteros (sin decimales)
+                scrollTrigger: {
+                    trigger: ".metrics",
+                    start: "top 85%", // Arranca cuando asoma en pantalla
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+    });
     
 });
 

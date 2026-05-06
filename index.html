@@ -92,9 +92,9 @@
           <p class="menu-desc">Llevate un fanzine o unas postales y ayudanos a seguir contando historias.</p>
         </div>
         <div class="hover-tiles">
-          <img src="IMAGENES/Banano.JPG" class="tile tile-1" alt="Fanzine">
-          <img src="IMAGENES/Canasta 1.JPG" class="tile tile-2" alt="Postales">
-          <img src="IMAGENES/Canas 2.JPG" class="tile tile-3" alt="Impresos">
+          <img src="imagenes/Banano (Grande).JPG" class="tile tile-1" alt="Fanzine">
+          <img src="imagenes/Canasta 1 (Grande).JPG" class="tile tile-2" alt="Postales">
+          <img src="imagenes/Canas 2 (Grande).JPG" class="tile tile-3" alt="Impresos">
         </div>
       </li>
     </ul>
@@ -213,46 +213,93 @@
     </div>
   </div>
 </section>
-<section class="productos gsap-reveal">
-  <div class="productos-header">
-    <div class="section-eyebrow accent-green">LO QUE NOS DA LA TIERRA</div>
-    <h2 class="section-headline-xl">CANTIDAD<br><span class="accent-script outline-text-yellow">y frescura</span></h2>
+<section class="productos-editorial gsap-reveal">
+  <div class="productos-header text-center">
+    <div class="section-eyebrow accent-red">LO QUE NOS DA LA TIERRA</div>
+    <h2 class="section-headline-xl text-carbon">CANTIDAD<br><span class="accent-script accent-green">y logística</span></h2>
   </div>
 
-  <div class="productos-grid">
-    <div class="producto-item grande">
-      <img src="IMAGENES/Mango1.JPG" alt="Mangos frescos">
-      <div class="producto-overlay overlay-yellow">
-        <span class="producto-name">MANGO</span>
-        <span class="producto-desc">El dulcito de nuestra tierra.</span>
+  <!-- El Acordeón Evolucionado -->
+  <div class="abundancia-container">
+    
+    <!-- Tarjeta 1: Mango -->
+    <div class="abundancia-card card-yellow">
+      <h3 class="vertical-text">MANGO</h3>
+      <img src="imagenes/Mango1 (Grande).JPG" alt="Mangos" class="abundancia-img">
+      <!-- Ficha técnica revelable -->
+      <div class="market-dossier">
+        <div class="dossier-header">
+          <span class="stamp-name">MANGO</span>
+          <span class="stamp-desc">El dulcito de nuestra tierra.</span>
+        </div>
+        <ul class="dossier-data">
+          <li><strong>TEMPORADA:</strong> Mayo a Agosto</li>
+          <li><strong>LLEGADA:</strong> 4:30 AM (Camiones del Tolima)</li>
+          <li><strong>MOVIMIENTO:</strong> +12 Toneladas semanales</li>
+        </ul>
       </div>
     </div>
-    <div class="producto-item">
-      <img src="IMAGENES/Tomate.JPG" alt="Tomates rojos">
-      <div class="producto-overlay overlay-red">
-        <span class="producto-name">TOMATE</span>
-        <span class="producto-desc">Rojito y maduro pal guiso.</span>
+
+    <!-- Tarjeta 2: Tomate -->
+    <div class="abundancia-card card-red">
+      <h3 class="vertical-text">TOMATE</h3>
+      <img src="imagenes/Tomate (Grande).JPG" alt="Tomates" class="abundancia-img">
+      <div class="market-dossier">
+        <div class="dossier-header">
+          <span class="stamp-name">TOMATE</span>
+          <span class="stamp-desc">Rojito y maduro pal guiso.</span>
+        </div>
+        <ul class="dossier-data">
+          <li><strong>ROTACIÓN:</strong> Diaria (Alta demanda)</li>
+          <li><strong>ZONA:</strong> Bodegas 3 y 4 (La Minorista)</li>
+          <li><strong>CASERA CLAVE:</strong> Doña Luz y su familia</li>
+        </ul>
       </div>
     </div>
-    <div class="producto-item">
-      <img src="IMAGENES/Platanos 2.JPG" alt="Racimos de plátanos">
-      <div class="producto-overlay overlay-green">
-        <span class="producto-name">PLÁTANO</span>
-        <span class="producto-desc">Que nunca falte en el almuerzo.</span>
+
+    <!-- Tarjeta 3: Plátano -->
+    <div class="abundancia-card card-green">
+      <h3 class="vertical-text">PLÁTANO</h3>
+      <img src="imagenes/Platanos 2 (Grande).JPG" alt="Plátanos" class="abundancia-img">
+      <div class="market-dossier">
+        <div class="dossier-header">
+          <span class="stamp-name">PLÁTANO</span>
+          <span class="stamp-desc">Que nunca falte en el almuerzo.</span>
+        </div>
+        <ul class="dossier-data">
+          <li><strong>DESCARGA:</strong> Lunes y Jueves (Madrugada)</li>
+          <li><strong>ORIGEN:</strong> Quindío y Risaralda</li>
+          <li><strong>PRESENTACIÓN:</strong> Racimo bruto y desgranado</li>
+        </ul>
       </div>
     </div>
-    <div class="producto-item grande-h">
-      <img src="IMAGENES/Papa 1.JPG" alt="Bultos de papa">
-      <div class="producto-overlay overlay-yellow">
-        <span class="producto-name">PAPA</span>
-        <span class="producto-desc">El tesoro barrato que llena barrigas.</span>
+
+    <!-- Tarjeta 4: Papa -->
+    <div class="abundancia-card card-yellow">
+      <h3 class="vertical-text">PAPA</h3>
+      <img src="imagenes/Papa 1 (Grande).JPG" alt="Papa" class="abundancia-img">
+      <div class="market-dossier">
+        <div class="dossier-header">
+          <span class="stamp-name">PAPA</span>
+          <span class="stamp-desc">El tesoro barato que llena barrigas.</span>
+        </div>
+        <ul class="dossier-data">
+          <li><strong>VOLUMEN:</strong> +500 Bultos por día</li>
+          <li><strong>RUTAS:</strong> Nariño y Boyacá</li>
+          <li><strong>ESFUERZO:</strong> Coteros cargan 50kg por viaje</li>
+        </ul>
       </div>
     </div>
+
   </div>
 
+  <!-- Ticker de cierre brutalista -->
   <div class="ticker-wrap">
     <div class="ticker">
-      <span>LA ÑAPA · EL PREGÓN · EL FIADO · LA MADRUGADA · EL VOLUMEN · EL COLOR · LA CASERA · EL CANASTO · LA ÑAPA · EL PREGÓN · EL FIADO · </span>
+      <!-- Primer bloque de texto -->
+      <span>LA ÑAPA <span class="accent-red">✦</span> EL PREGÓN <span class="accent-red">✦</span> EL FIADO <span class="accent-red">✦</span> LA MADRUGADA <span class="accent-red">✦</span> EL VOLUMEN <span class="accent-red">✦</span> EL COLOR <span class="accent-red">✦</span> LA CASERA <span class="accent-red">✦</span> EL CANASTO <span class="accent-red">✦</span> </span>
+      <!-- Segundo bloque idéntico para el loop perfecto -->
+      <span>LA ÑAPA <span class="accent-red">✦</span> EL PREGÓN <span class="accent-red">✦</span> EL FIADO <span class="accent-red">✦</span> LA MADRUGADA <span class="accent-red">✦</span> EL VOLUMEN <span class="accent-red">✦</span> EL COLOR <span class="accent-red">✦</span> LA CASERA <span class="accent-red">✦</span> EL CANASTO <span class="accent-red">✦</span> </span>
     </div>
   </div>
 </section>

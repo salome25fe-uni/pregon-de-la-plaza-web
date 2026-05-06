@@ -1045,3 +1045,256 @@ button {
     transform-origin: bottom right;
   }
 }
+
+/* ============================================
+   SECCIÓN PRODUCTOS (ACORDEÓN DE SERIGRAFÍA & DATOS)
+   ============================================ */
+
+.productos-editorial {
+  padding: 120px 40px 0;
+  background: var(--bone); 
+  border-bottom: 2px solid var(--carbon);
+}
+
+.productos-header {
+  margin-bottom: 60px;
+}
+
+/* --- Contenedor Principal del Acordeón --- */
+.abundancia-container {
+  display: flex;
+  width: 100%;
+  height: 70vh; 
+  min-height: 500px;
+  border: 4px solid var(--carbon); 
+  box-shadow: 20px 20px 0px rgba(0,0,0,0.8); 
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* --- Cada Columna (Tarjeta) --- */
+.abundancia-card {
+  position: relative;
+  flex: 1; /* Distribución igualitaria por defecto */
+  border-right: 4px solid var(--carbon);
+  overflow: hidden;
+  cursor: crosshair; 
+  transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.abundancia-card:last-child {
+  border-right: none;
+}
+
+/* Colores de Tinta */
+.card-yellow { background: var(--yellow); }
+.card-red { background: var(--red); }
+.card-green { background: var(--green); }
+
+/* --- Imagen Base (Filtro Multiply) --- */
+.abundancia-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.2); 
+  mix-blend-mode: multiply; /* Efecto serigrafía */
+  opacity: 0.8;
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- Título Gigante de Fondo --- */
+.vertical-text {
+  position: absolute;
+  font-family: var(--font-disp);
+  font-size: 8vw; 
+  color: rgba(var(--rgb-carbon), 0.15);
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: transform 0.6s ease, color 0.6s ease;
+  z-index: 1;
+}
+
+/* --- Ficha Técnica Brutalista (Dossier) --- */
+.market-dossier {
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  right: 20px;
+  background: var(--bone);
+  border: 3px solid var(--carbon);
+  box-shadow: 10px 10px 0px var(--carbon);
+  padding: 25px;
+  transform: translateY(120%); /* Escondido por defecto */
+  opacity: 0;
+  z-index: 3;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dossier-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.stamp-name {
+  font-family: var(--font-disp);
+  font-size: 38px;
+  color: var(--carbon);
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.stamp-desc {
+  font-family: var(--font-script);
+  font-size: 22px;
+  color: var(--red);
+  margin-top: 5px;
+}
+
+.dossier-data {
+  list-style: none;
+  padding-top: 15px;
+  border-top: 2px dashed var(--carbon); 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dossier-data li {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--carbon);
+  line-height: 1.4;
+}
+
+.dossier-data strong {
+  font-family: var(--font-disp);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  background: rgba(var(--rgb-green), 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+
+/* ============================================
+   LA INTERACCIÓN MÁGICA (HOVER)
+   ============================================ */
+
+/* 1. Expansión Flexbox */
+.abundancia-card:hover {
+  flex: 3; 
+}
+
+/* 2. Recuperación de color */
+.abundancia-card:hover .abundancia-img {
+  filter: grayscale(0%) contrast(1.1);
+  mix-blend-mode: normal; 
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* 3. Entrada del dossier de datos */
+.abundancia-card:hover .market-dossier {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* 4. Animación del texto gigante */
+.abundancia-card:hover .vertical-text {
+  transform: rotate(-90deg) translateY(-30px) scale(1.1);
+  color: rgba(var(--rgb-bone), 0.4);
+}
+
+/* ============================================
+   TICKER BRUTALISTA (CINTA DE MERCADO)
+   ============================================ */
+.ticker-wrap {
+  width: 100vw; /* Forzamos a que ocupe toda la pantalla de borde a borde */
+  margin-left: calc(-50vw + 50%); /* Este truco rompe el padding del contenedor padre */
+  overflow: hidden;
+  background: var(--yellow); /* Cinta de advertencia/mercado vibrante */
+  border-top: 4px solid var(--carbon); /* Bordes duros */
+  border-bottom: 4px solid var(--carbon);
+  padding: 15px 0;
+  margin-top: 80px;
+  display: flex;
+}
+
+.ticker {
+  display: flex;
+  white-space: nowrap;
+  animation: tickerLoop 20s linear infinite; /* Movimiento constante de 20 segundos */
+}
+
+/* Interacción divertida: si el usuario pone el mouse encima, la cinta se pausa para leer */
+.ticker-wrap:hover .ticker {
+  animation-play-state: paused;
+}
+
+.ticker span {
+  flex-shrink: 0;
+  font-family: var(--font-disp);
+  font-size: clamp(30px, 4vw, 50px); /* Letra gigante y con peso */
+  font-weight: 700;
+  color: var(--carbon);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-right: 15px;
+}
+
+/* Le damos un toque de color rojo a los separadores */
+.ticker span .accent-red {
+  color: var(--red);
+  display: inline-block;
+  margin: 0 15px;
+}
+
+/* El loop mueve el contenedor exactamente a la mitad (el tamaño de 1 span) y vuelve a empezar invisiblemente */
+@keyframes tickerLoop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+/* --- RESPONSIVE DEL ACORDEÓN --- */
+@media (max-width: 960px) {
+  .abundancia-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 800px;
+  }
+  .abundancia-card {
+    border-right: none;
+    border-bottom: 4px solid var(--carbon);
+    min-height: 250px; 
+  }
+  .abundancia-card:last-child {
+    border-bottom: none;
+  }
+  .vertical-text {
+    transform: rotate(0deg);
+    font-size: 15vw;
+  }
+  .abundancia-card:hover .vertical-text {
+    transform: rotate(0deg) translateY(-10px) scale(1.1);
+  }
+  .market-dossier {
+    transform: translateY(0);
+    opacity: 1;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 15px;
+  }
+  .dossier-data li { font-size: 12px; }
+  .stamp-name { font-size: 28px; }
+}
