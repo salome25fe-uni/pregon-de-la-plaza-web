@@ -1,0 +1,118 @@
+/* ===============================
+   IDENTIDAD VISUAL & TOKENS
+   =============================== */
+
+:root {
+  /* --- 1. COLORES OFICIALES (HEX) --- */
+  --carbon: #353535;      /* Negro carbón - Contraste, profundidad y calidez  */
+  --bone:   #f7ecbc;      /* Blanco hueso - Base neutral y respiro visual  */
+  --green:  #118a5f;      /* Verde - Frescura, hojas y naturaleza  */
+  --yellow: #f7c332;      /* Amarillo - Abundancia, movimiento y energía */
+  --red:    #de0636;      /* Rojo - Intensidad, madurez y avisos
+  /* --- 2. COLORES (RGB) PARA MANEJO DE OPACIDADES --- */
+  /* Pro-tip: Usaremos rgba(var(--rgb-carbon), 0.5) para overlays y sombras */
+  --rgb-carbon: 53, 53, 53;
+  --rgb-bone:   247, 236, 188;
+  --rgb-green:  17, 138, 95;
+  --rgb-yellow: 247, 195, 50;
+  --rgb-red:    222, 6, 54;
+
+  /* --- 3. VARIANTES DERIVADAS (SOMBRAS Y HOVERS) --- */
+  --carbon-light: #4a4a4a;
+  --green-dark:   #0d6b49;
+  --yellow-light: #f9d05a;
+  --red-dark:     #b5052c;
+
+  /* --- 4. TIPOGRAFÍAS DEL SISTEMA --- */
+  /* Fuentes oficiales de la marca con fallbacks de Google Fonts para web */
+  
+  /* Grota Rounded / Flegri: Formas inusuales, cartelismo popular y solidez */
+  --font-disp: 'Flegri', 'Grota Rounded', 'Fredoka', sans-serif; 
+  
+  /* Pangram Sans: Base del sistema, lectura clara y neutral */
+  --font-body: 'Pangram Sans', 'DM Sans', sans-serif; 
+  
+  /* Letra manual para acentos (La usamos en los "spans" divertidos) */
+  --font-script: 'Yellowtail', cursive; 
+}
+
+/* ===========
+   RESET CSS
+   ===========*/
+
+*, *::before, *::after { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+html { 
+  scroll-behavior: smooth; 
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--carbon);
+  color: var(--bone);
+  font-family: var(--font-body);
+  overflow-x: hidden; /* Evita el scroll horizontal indeseado */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tratamiento fotográfico global (Para que las imágenes no se deformen) */
+img, picture, video, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+a { 
+  text-decoration: none; 
+  color: inherit; 
+  transition: all 0.3s ease;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* =============================
+   CLASES DE UTILIDAD GLOBALES
+   ============================= */
+
+/* Textos de Acento con los colores oficiales */
+.accent-green  { color: var(--green) !important; }
+.accent-yellow { color: var(--yellow) !important; }
+.accent-red    { color: var(--red) !important; }
+
+/* Tipografía Script para darle el toque manual a los subtítulos */
+.accent-script { 
+  font-family: var(--font-script); 
+  font-weight: 400; 
+  text-transform: none; 
+  letter-spacing: normal;
+}
+
+/* Utilidades de espaciado y alineación */
+.mt-4 { margin-top: 24px; display: inline-block; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.text-center { text-align: center; }
+
+/* Fondos y bordes de texto */
+.text-carbon { color: var(--carbon) !important; }
+.text-bone { color: var(--bone) !important; }
+.bg-carbon { background-color: var(--carbon); }
+.bg-bone { background-color: var(--bone); }
+.outline-text-bone { 
+  -webkit-text-stroke: 1.5px var(--bone); 
+  color: transparent; 
+}
+.outline-text-yellow { 
+  -webkit-text-stroke: 1.5px var(--yellow); 
+  color: transparent; 
+}
