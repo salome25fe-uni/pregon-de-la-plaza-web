@@ -1,11 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inicio | Pregón de la Plaza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Fredoka:wght@400;500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+
+<header class="nav-brutal">
+  <a href="index.html" class="nav-logo-link">
+    <img src="IMAGENES/logo.png" alt="Logo Pregón de la Plaza" class="nav-logo">
+  </a>
+  
+  <button class="menu-trigger" id="menuTrigger" aria-label="Abrir menú">
+    <span class="menu-text">MENÚ</span>
+    <div class="icon-wrap">
+        <svg viewBox="0 0 100 100" fill="currentColor">
+            <path d="M70,30 L30,50 L70,70 L70,30 Z M20,45 L20,55 L25,55 L25,45 L20,45 Z"></path>
+        </svg>
+    </div>
+  </button>
+</header>
+
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-content">
+    <ul class="menu-links">
+      <li class="menu-item">
+        <div class="menu-item-content">
+          <a href="index.html" class="menu-link">ARCHIVO</a>
+          <p class="menu-desc">La memoria visual y el bullicio de nuestros mercados, guardados pa' que no se pierdan.</p>
+        </div>
+        <div class="hover-tiles">
+          <img src="IMAGENES/NIña.JPG" class="tile tile-1" alt="Archivo visual">
+          <img src="IMAGENES/Carga 1.JPG" class="tile tile-2" alt="Documentación">
+          <img src="IMAGENES/Hojas.JPG" class="tile tile-3" alt="Saberes">
+        </div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-content">
+          <a href="plazas.html" class="menu-link">PLAZAS</a>
+          <p class="menu-desc">Paseate por las galerías y mercados que le dan de comer a todo el Eje Cafetero.</p>
+        </div>
+        <div class="hover-tiles">
+          <img src="IMAGENES/cajas moradas.JPG" class="tile tile-1" alt="Plaza 1">
+          <img src="IMAGENES/Carro.JPG" class="tile tile-2" alt="Plaza 2">
+          <img src="IMAGENES/Papas y cajas.JPG" class="tile tile-3" alt="Plaza 3">
+        </div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-content">
+          <a href="narrativas.html" class="menu-link">NARRATIVAS</a>
+          <p class="menu-desc">La película 'El Orden Invisible' y los audios de la gente que camella en los pasillos[cite: 1].</p>
+        </div>
+        <div class="hover-tiles">
+          <img src="IMAGENES/Carga 4.JPG" class="tile tile-1" alt="Documental">
+          <img src="IMAGENES/Frijol manos.JPG" class="tile tile-2" alt="Podcast">
+          <img src="IMAGENES/Carga 2.JPG" class="tile tile-3" alt="Cine">
+        </div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-content">
+          <a href="mapa.html" class="menu-link">MAPA</a>
+          <p class="menu-desc">Ubicá las 14 plazas que tenemos mapeadas y caé a visitarlas[cite: 8].</p>
+        </div>
+        <div class="hover-tiles">
+          <img src="IMAGENES/Mango1.JPG" class="tile tile-1" alt="Cartografía">
+          <img src="IMAGENES/Tomate.JPG" class="tile tile-2" alt="Ubicación">
+          <img src="IMAGENES/Platanos 2.JPG" class="tile tile-3" alt="Territorio">
+        </div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-content">
+          <a href="nosotros.html" class="menu-link">NOSOTROS</a>
+          <p class="menu-desc">Los tres pelados apasionados por recoger y contar la memoria de nuestra tierra[cite: 5].</p>
+        </div>
+        <div class="hover-tiles">
+          <img src="IMAGENES/Alex.JPG" class="tile tile-1" alt="Equipo 1">
+          <img src="IMAGENES/Wilmer.JPG" class="tile tile-2" alt="Equipo 2">
+          <img src="IMAGENES/Salome.JPG" class="tile tile-3" alt="Equipo 3">
+        </div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-item-content">
+          <a href="recuerdos.html" class="menu-link">RECUERDOS</a>
+          <p class="menu-desc">Llevate un fanzine o unas postales y ayudanos a seguir contando historias[cite: 7].</p>
+        </div>
+        <div class="hover-tiles">
+          <img src="IMAGENES/Banano.JPG" class="tile tile-1" alt="Fanzine">
+          <img src="IMAGENES/Canasta 1.JPG" class="tile tile-2" alt="Postales">
+          <img src="IMAGENES/Canas 2.JPG" class="tile tile-3" alt="Impresos">
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<script src="java.js"></script>
+
 </body>
 </html>
