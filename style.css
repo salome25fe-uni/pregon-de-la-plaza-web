@@ -186,7 +186,7 @@ button {
   transform: scale(1.1) rotate(-10deg); 
 }
 
-/* ═══ OVERLAY DEL MENÚ FULLSCREEN ════════════ */
+/* ═══ OVERLAY DEL MENÚ FULLSCREEN (VERSIÓN PREMIUM) ════════════ */
 .menu-overlay {
   position: fixed; 
   inset: 0; 
@@ -195,9 +195,9 @@ button {
   display: flex; 
   align-items: center; 
   justify-content: center;
-  /* El clip-path crea el efecto de apertura geométrica */
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  isolation: isolate;
 }
 
 .menu-overlay.is-active { 
@@ -217,76 +217,141 @@ button {
   width: 100%;
 }
 
-.menu-item { 
-  position: relative; 
-  border-bottom: 1px solid rgba(var(--rgb-bone), 0.1); 
+/* Ocultamos las miniaturas, ahora serán fondos */
+.hover-tiles { display: none !important; }
+
+.menu-item {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(var(--rgb-bone), 0.1);
+  cursor: pointer;
 }
 
-.menu-item:first-child {
-  border-top: 1px solid rgba(var(--rgb-bone), 0.1);
+.menu-item:first-child { 
+  border-top: 1px solid rgba(var(--rgb-bone), 0.1); 
+}
+
+/* El fondo dinámico de cada ítem */
+.menu-item-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 0.55s cubic-bezier(0.25,1,0.5,1), transform 0.7s cubic-bezier(0.25,1,0.5,1);
+  z-index: 0;
+}
+
+.menu-item-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(var(--rgb-carbon), 0.95) 0%, rgba(var(--rgb-carbon), 0.6) 55%, transparent 100%);
+}
+
+.menu-item:hover .menu-item-bg {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .menu-item-content {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
-  padding: 15px 0;
-  position: relative;
-  z-index: 10;
+  padding: 18px 5%;
+  gap: 48px;
 }
 
+/* Tipografía de los enlaces */
 .menu-link {
-  display: inline-block; 
   font-family: var(--font-disp);
-  font-size: clamp(50px, 7vw, 100px); 
+  font-size: clamp(50px, 7vw, 100px);
   line-height: 0.85;
-  color: var(--bone); 
-  text-transform: uppercase; 
-  transform-origin: left center;
-  /* Animación de entrada inicializada para que JS (GSAP) la controle */
-  transform: translateY(100%); 
+  color: var(--bone);
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-block;
+  transform: translateY(100%);
   opacity: 0;
-  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
-  will-change: transform, color, text-shadow;
+  transition: transform 0.7s cubic-bezier(0.77,0,0.175,1), opacity 0.7s ease, color 0.25s ease, letter-spacing 0.3s ease;
 }
+
+/* Cascada de entrada */
+.menu-overlay.is-active .menu-item:nth-child(1) .menu-link { transition-delay:0.07s; transform:translateY(0); opacity:1; }
+.menu-overlay.is-active .menu-item:nth-child(2) .menu-link { transition-delay:0.14s; transform:translateY(0); opacity:1; }
+.menu-overlay.is-active .menu-item:nth-child(3) .menu-link { transition-delay:0.21s; transform:translateY(0); opacity:1; }
+.menu-overlay.is-active .menu-item:nth-child(4) .menu-link { transition-delay:0.28s; transform:translateY(0); opacity:1; }
+.menu-overlay.is-active .menu-item:nth-child(5) .menu-link { transition-delay:0.35s; transform:translateY(0); opacity:1; }
+.menu-overlay.is-active .menu-item:nth-child(6) .menu-link { transition-delay:0.42s; transform:translateY(0); opacity:1; }
 
 .menu-desc {
   font-family: var(--font-body);
   font-size: 13px;
-  line-height: 1.4;
-  color: var(--bone);
-  max-width: 350px;
-  margin-left: 60px; 
-  opacity: 0; 
+  line-height: 1.5;
+  color: rgba(var(--rgb-bone), 0.6);
+  max-width: 280px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  will-change: transform, opacity;
-}
-
-/* Cascada de aparición de los links cuando se abre el menú */
-.menu-overlay.is-active .menu-item:nth-child(1) .menu-link { transition-delay: 0.1s; transform: translateY(0); opacity: 1; }
-.menu-overlay.is-active .menu-item:nth-child(2) .menu-link { transition-delay: 0.2s; transform: translateY(0); opacity: 1; }
-.menu-overlay.is-active .menu-item:nth-child(3) .menu-link { transition-delay: 0.3s; transform: translateY(0); opacity: 1; }
-.menu-overlay.is-active .menu-item:nth-child(4) .menu-link { transition-delay: 0.4s; transform: translateY(0); opacity: 1; }
-.menu-overlay.is-active .menu-item:nth-child(5) .menu-link { transition-delay: 0.5s; transform: translateY(0); opacity: 1; }
-.menu-overlay.is-active .menu-item:nth-child(6) .menu-link { transition-delay: 0.6s; transform: translateY(0); opacity: 1; }
-
-/* Contenedor de las miniaturas que aparecen al hacer hover */
-.hover-tiles {
-  position: fixed; inset: 0; pointer-events: none; z-index: 1;
-}
-
-.tile {
-  position: absolute;
-  object-fit: cover;
-  filter: grayscale(20%) contrast(1.2);
   opacity: 0;
-  transform: scale(0.8);
-  box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.4);
+  transform: translateX(-12px);
+  transition: opacity 0.35s ease 0.1s, transform 0.35s ease 0.1s;
 }
 
-.tile-1 { width: 25vw; height: 35vh; }
-.tile-2 { width: 20vw; height: 28vh; }
-.tile-3 { width: 15vw; height: 22vh; }
+.menu-item:hover .menu-desc { opacity: 1; transform: translateX(0); }
+
+/* Numeritos y Flecha */
+.menu-num {
+  font-family: var(--font-disp);
+  font-size: 16px;
+  color: rgba(var(--rgb-bone), 0.3);
+  min-width: 32px;
+  align-self: flex-start;
+  margin-top: 12px;
+}
+
+.menu-arrow {
+  margin-left: auto;
+  font-size: 32px;
+  color: var(--yellow);
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.25,1,0.5,1);
+  flex-shrink: 0;
+}
+
+.menu-item:hover .menu-arrow { opacity: 1; transform: translateX(0); }
+
+/* Interacción de colores de la marca en Hover */
+.menu-links:hover .menu-item:not(:hover) .menu-link { opacity: 0.22; }
+.menu-item:hover .menu-link { letter-spacing: 0.02em; }
+
+.menu-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.25,1,0.5,1); z-index: 3;
+}
+.menu-item:hover::before { transform: scaleY(1); }
+
+.menu-item:nth-child(1)::before { background: var(--yellow); }
+.menu-item:nth-child(2)::before { background: var(--green);  }
+.menu-item:nth-child(3)::before { background: var(--red);    }
+.menu-item:nth-child(4)::before { background: var(--yellow); }
+.menu-item:nth-child(5)::before { background: var(--green);  }
+.menu-item:nth-child(6)::before { background: var(--red);    }
+
+.menu-item:nth-child(1):hover .menu-link { color: var(--yellow); }
+.menu-item:nth-child(2):hover .menu-link { color: var(--green);  }
+.menu-item:nth-child(3):hover .menu-link { color: var(--red);    }
+.menu-item:nth-child(4):hover .menu-link { color: var(--yellow); }
+.menu-item:nth-child(5):hover .menu-link { color: var(--green);  }
+.menu-item:nth-child(6):hover .menu-link { color: var(--red);    }
+
+@media (max-width: 600px) {
+  .menu-link { font-size: clamp(36px, 10vw, 56px); }
+  .menu-item-content { gap: 16px; padding: 12px 5%; }
+  .menu-desc, .menu-num { display: none; }
+}
 
 /* ═══ HERO SECTION ═══════════════════════════ */
 .hero {
