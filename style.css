@@ -116,3 +116,300 @@ button {
   -webkit-text-stroke: 1.5px var(--yellow); 
   color: transparent; 
 }
+
+/* ============================================
+   COMMIT 3: NAVEGACIÓN BRUTALISTA Y HERO
+   ============================================ */
+
+/* ═══ NAVEGACIÓN (NAV BRUTAL) ════════════════ */
+.nav-brutal {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0;
+  padding: 30px 40px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  z-index: 1000; 
+  pointer-events: none; /* Deja clickear lo que hay detrás si no es un link */
+}
+
+.nav-logo-link, .menu-trigger { 
+  pointer-events: auto; 
+}
+
+.nav-logo {
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-logo-link:hover .nav-logo {
+  transform: scale(1.1) rotate(-2deg);
+}
+
+/* Botón de Menú Estilo Cartelismo */
+.menu-trigger {
+  background: var(--bone); 
+  border: 3px solid var(--carbon);
+  box-shadow: 6px 6px 0px var(--red); /* Sombra dura brutalista */
+  border-radius: 50px;
+  padding: 10px 24px; 
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.menu-trigger:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0px var(--yellow);
+}
+
+.menu-text { 
+  font-family: var(--font-disp); 
+  font-size: 16px; 
+  color: var(--carbon); 
+  text-transform: uppercase; 
+  letter-spacing: 0.05em;
+}
+
+.icon-wrap svg { 
+  width: 28px; 
+  height: 28px; 
+  fill: var(--carbon); 
+  transition: transform 0.3s ease; 
+}
+
+.menu-trigger:hover .icon-wrap svg { 
+  transform: scale(1.1) rotate(-10deg); 
+}
+
+/* ═══ OVERLAY DEL MENÚ FULLSCREEN ════════════ */
+.menu-overlay {
+  position: fixed; 
+  inset: 0; 
+  background: var(--carbon);
+  z-index: 999; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  /* El clip-path crea el efecto de apertura geométrica */
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.menu-overlay.is-active { 
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); 
+}
+
+.menu-content {
+  position: relative; 
+  z-index: 10; 
+  width: 100%;
+  max-width: 1400px; 
+  padding: 0 5%;
+}
+
+.menu-links { 
+  list-style: none; 
+  width: 100%;
+}
+
+.menu-item { 
+  position: relative; 
+  border-bottom: 1px solid rgba(var(--rgb-bone), 0.1); 
+}
+
+.menu-item:first-child {
+  border-top: 1px solid rgba(var(--rgb-bone), 0.1);
+}
+
+.menu-item-content {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  position: relative;
+  z-index: 10;
+}
+
+.menu-link {
+  display: inline-block; 
+  font-family: var(--font-disp);
+  font-size: clamp(50px, 7vw, 100px); 
+  line-height: 0.85;
+  color: var(--bone); 
+  text-transform: uppercase; 
+  transform-origin: left center;
+  /* Animación de entrada inicializada para que JS (GSAP) la controle */
+  transform: translateY(100%); 
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+  will-change: transform, color, text-shadow;
+}
+
+.menu-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--bone);
+  max-width: 350px;
+  margin-left: 60px; 
+  opacity: 0; 
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  will-change: transform, opacity;
+}
+
+/* Cascada de aparición de los links cuando se abre el menú */
+.menu-overlay.is-active .menu-item:nth-child(1) .menu-link { transition-delay: 0.1s; transform: translateY(0); opacity: 1; }
+.menu-overlay.is-active .menu-item:nth-child(2) .menu-link { transition-delay: 0.2s; transform: translateY(0); opacity: 1; }
+.menu-overlay.is-active .menu-item:nth-child(3) .menu-link { transition-delay: 0.3s; transform: translateY(0); opacity: 1; }
+.menu-overlay.is-active .menu-item:nth-child(4) .menu-link { transition-delay: 0.4s; transform: translateY(0); opacity: 1; }
+.menu-overlay.is-active .menu-item:nth-child(5) .menu-link { transition-delay: 0.5s; transform: translateY(0); opacity: 1; }
+.menu-overlay.is-active .menu-item:nth-child(6) .menu-link { transition-delay: 0.6s; transform: translateY(0); opacity: 1; }
+
+/* Contenedor de las miniaturas que aparecen al hacer hover */
+.hover-tiles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+}
+
+.tile {
+  position: absolute;
+  object-fit: cover;
+  filter: grayscale(20%) contrast(1.2);
+  opacity: 0;
+  transform: scale(0.8);
+  box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.4);
+}
+
+.tile-1 { width: 25vw; height: 35vh; }
+.tile-2 { width: 20vw; height: 28vh; }
+.tile-3 { width: 15vw; height: 22vh; }
+
+/* ═══ HERO SECTION ═══════════════════════════ */
+.hero {
+  position: relative; 
+  width: 100%;
+  height: 100vh;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-bg-img {
+  position: absolute; 
+  inset: 0; 
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute; 
+  inset: 0; 
+  z-index: 2;
+  /* Gradiente para asegurar que el texto se lea sobre cualquier foto */
+  background: linear-gradient(to bottom, rgba(var(--rgb-carbon), 0.3) 0%, rgba(var(--rgb-carbon), 0.8) 100%);
+}
+
+.hero-content {
+  position: relative; 
+  z-index: 3;
+  text-align: center;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+.hero-title {
+  font-family: var(--font-disp);
+  font-size: clamp(80px, 12vw, 160px);
+  line-height: 0.85; 
+  color: var(--yellow);
+  text-transform: uppercase;
+}
+
+.hero-script {
+  font-family: var(--font-script);
+  font-size: clamp(50px, 8vw, 100px);
+  color: var(--red);
+  text-transform: lowercase;
+  display: inline-block;
+  transform: translateY(-10px);
+}
+
+.hero-highlight {
+  color: var(--bone);
+}
+
+.hero-body {
+  font-size: 18px; 
+  font-weight: 400; 
+  line-height: 1.6;
+  color: var(--bone); 
+  margin: 30px auto; 
+  max-width: 500px;
+}
+
+/* ═══ BOTÓN TOMATE (REEMPLAZO DEL MENÚ) ════════════ */
+.fruit-trigger {
+  background: transparent; 
+  border: none;
+  padding: 0; 
+  cursor: pointer; 
+  outline: none;
+  pointer-events: auto;
+  z-index: 1001; /* Asegura que el tomate siempre esté por encima de todo */
+}
+
+.fruit-icon {
+  width: 65px; /* Tamaño más grande */
+  height: auto;
+  /* Sombra sólida brutalista usando la variable carbón */
+  filter: drop-shadow(4px 4px 0px var(--carbon)); 
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
+  transform-origin: center;
+}
+
+/* Interacción al pasar el mouse */
+.fruit-trigger:hover .fruit-icon {
+  transform: scale(1.15) rotate(12deg); /* Crece un poquito más y gira */
+  /* La sombra cambia al amarillo de abundancia */
+  filter: drop-shadow(6px 6px 0px var(--yellow)); 
+}
+
+/* Etiqueta flotante estilo "Documental" */
+.hero-photo-tag {
+  position: absolute; 
+  bottom: 40px; 
+  left: 40px; 
+  z-index: 3;
+  background: var(--bone); 
+  color: var(--carbon);
+  padding: 12px 20px; 
+  border-radius: 8px;
+  box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+}
+
+.tag-label {
+  display: block; 
+  font-family: var(--font-disp);
+  font-size: 14px; 
+  font-weight: 600; 
+  letter-spacing: 0.05em;
+}
+
+.tag-sub {
+  display: block; 
+  font-family: var(--font-body);
+  font-size: 12px; 
+  margin-top: 4px; 
+  opacity: 0.8;
+}
+
+/* Responsive básico para la cabecera */
+@media (max-width: 600px) {
+  .nav-brutal { padding: 20px; }
+  .hero-photo-tag { bottom: 20px; left: 20px; }
+  .menu-desc { display: none; } /* Ocultamos la descripción en móvil para no saturar */
+}
