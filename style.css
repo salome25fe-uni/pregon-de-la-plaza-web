@@ -792,3 +792,256 @@ button {
     min-height: 400px; 
   }
 }
+
+
+
+/* ============================================
+   SECCIÓN MÉTRICAS (INFOGRAFÍA EDITORIAL)
+   ============================================ */
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas exactas */
+  background: var(--carbon);
+  /* Líneas horizontales estrictas */
+  border-top: 1px solid rgba(var(--rgb-bone), 0.15);
+  border-bottom: 1px solid rgba(var(--rgb-bone), 0.15);
+  margin-bottom: 0;
+  padding: 0; /* Quitamos el padding gigante que tenía */
+}
+
+.metric { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+  padding: 60px 40px; 
+  /* Líneas divisorias verticales */
+  border-right: 1px solid rgba(var(--rgb-bone), 0.15);
+  transition: background 0.4s ease;
+  cursor: default;
+}
+
+/* Le quitamos el borde derecho al último para que no se vea feo */
+.metric:last-child {
+  border-right: none;
+}
+
+/* Efecto de luz muy sutil al pasar el mouse por el cuadro de la métrica */
+.metric:hover {
+  background: rgba(var(--rgb-bone), 0.03);
+}
+
+.metric-num { 
+  font-family: var(--font-disp); 
+  font-size: clamp(60px, 8vw, 110px); /* Tamaño responsive fluido */
+  line-height: 0.9; 
+  margin-bottom: 15px;
+  /* Sombra sutil para despegar el número del fondo */
+  text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+}
+
+.metric-label {
+  font-family: var(--font-body); 
+  font-size: 13px; 
+  font-weight: 600; 
+  letter-spacing: 0.2em; 
+  text-align: center;
+}
+
+/* --- Responsive para Móviles --- */
+@media (max-width: 768px) {
+  .metrics { 
+    grid-template-columns: 1fr; /* Una sola columna hacia abajo */
+  }
+  .metric { 
+    border-right: none; 
+    border-bottom: 1px solid rgba(var(--rgb-bone), 0.15); 
+    padding: 40px 20px; 
+  }
+  .metric:last-child { 
+    border-bottom: none; 
+  }
+}
+
+/* ============================================
+   SECCIÓN NARRATIVAS (REDSIEÑO EDITORIAL BRUTALISTA)
+   ============================================ */
+
+.narrativas-teaser {
+  /* Rompemos la grilla tradicional: 45% texto, 55% imagen */
+  display: grid;
+  grid-template-columns: 45% 55%;
+  background: var(--carbon);
+  padding: 120px 40px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- EL BLOQUE DE TEXTO FLOTANTE --- */
+.narrativas-content {
+  background: var(--bone); /* Contraste total */
+  padding: 60px 50px;
+  border: 3px solid var(--carbon);
+  border-radius: 12px;
+  /* Sombra dura brutalista que le da volumen 3D */
+  box-shadow: -15px 15px 0px var(--red);
+  
+  /* EL TRUCO DE SUPERPOSICIÓN: Se monta sobre la foto */
+  z-index: 10;
+  transform: translateX(15%); 
+}
+
+.tag-sticker {
+  font-family: var(--font-disp);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  display: inline-block;
+  padding: 6px 14px;
+  border: 2px solid var(--carbon);
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.bg-yellow { background-color: var(--yellow); }
+.text-carbon { color: var(--carbon) !important; }
+
+/* Ajuste tipográfico interno */
+.narrativas-content .section-headline-xl {
+  font-size: clamp(50px, 5vw, 80px);
+  margin-bottom: 20px;
+}
+
+.narrativas-content .accent-script {
+  font-size: 1.2em; /* Hacemos la letra cursiva más grande */
+}
+
+.narrativas-content .narrativas-body {
+  font-weight: 500;
+  color: var(--carbon-light);
+}
+
+/* Botón adaptado al fondo claro */
+.btn-carbon-hover {
+  background-color: var(--carbon) !important;
+  color: var(--bone) !important;
+  border: 2px solid var(--carbon);
+}
+.btn-carbon-hover:hover {
+  background-color: var(--red) !important; /* Estalla en rojo al hover */
+  border-color: var(--red);
+  box-shadow: 0 10px 0px rgba(0,0,0,0.2);
+}
+
+/* --- LA FOTOGRAFÍA --- */
+.narrativas-visual {
+  position: relative;
+  height: 650px;
+  border-radius: 16px;
+  border: 2px solid var(--carbon);
+  box-shadow: 20px 20px 0px rgba(0,0,0,0.5);
+  overflow: hidden;
+  z-index: 5;
+  cursor: crosshair; /* Detalle interactivo divertido */
+}
+
+/* Filtro apagado inicial (representa el estigma) */
+.narrativas-visual .card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(50%) grayscale(80%) brightness(0.6) contrast(1.2);
+  transform: scale(1.08);
+  transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s ease;
+}
+
+/* ESTALLIDO DE COLOR AL PASAR EL MOUSE */
+.narrativas-visual:hover .card-img {
+  filter: sepia(0%) grayscale(0%) brightness(1) contrast(1.1);
+  transform: scale(1);
+}
+
+/* --- EL ECUALIZADOR (CASSETTE) --- */
+.audio-wave-container {
+  position: absolute;
+  /* Lo escondemos debajo de la caja por defecto */
+  bottom: -150px; 
+  right: 40px;
+  background: var(--carbon);
+  padding: 20px 30px;
+  border-radius: 8px;
+  border: 2px solid var(--bone);
+  /* Sombra dura amarilla */
+  box-shadow: -10px 10px 0px var(--yellow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 15;
+  transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* El cassette entra disparado hacia arriba al hacer hover */
+.narrativas-visual:hover .audio-wave-container {
+  bottom: 40px;
+}
+
+.playing-text {
+  font-family: var(--font-disp);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  height: 40px;
+  gap: 5px;
+}
+
+.equalizer .bar {
+  width: 8px;
+  background: var(--yellow);
+  border-radius: 2px;
+  animation: equalize 1s infinite ease-in-out alternate;
+  transform-origin: bottom;
+}
+
+/* Tiempos de animación del audio */
+.equalizer .bar:nth-child(1) { animation-duration: 0.9s; }
+.equalizer .bar:nth-child(2) { animation-duration: 0.6s; height: 100%; }
+.equalizer .bar:nth-child(3) { animation-duration: 1.1s; }
+.equalizer .bar:nth-child(4) { animation-duration: 0.7s; height: 80%;}
+.equalizer .bar:nth-child(5) { animation-duration: 0.8s; }
+.equalizer .bar:nth-child(6) { animation-duration: 1.2s; height: 60%; }
+.equalizer .bar:nth-child(7) { animation-duration: 0.9s; }
+.equalizer .bar:nth-child(8) { animation-duration: 0.5s; height: 90%; }
+.equalizer .bar:nth-child(9) { animation-duration: 1.0s; }
+
+@keyframes equalize {
+  0% { height: 15%; }
+  100% { height: 100%; }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .narrativas-teaser {
+    grid-template-columns: 1fr;
+    padding: 60px 20px;
+    gap: 40px;
+  }
+  .narrativas-content {
+    transform: translateX(0); /* Quitamos la superposición en móviles */
+    box-shadow: 8px 8px 0px var(--red);
+  }
+  .narrativas-visual {
+    height: 450px;
+  }
+  .audio-wave-container {
+    bottom: 20px; /* Siempre visible en móvil */
+    right: 20px;
+    transform: scale(0.8);
+    transform-origin: bottom right;
+  }
+}

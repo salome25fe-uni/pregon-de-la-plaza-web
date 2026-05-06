@@ -154,5 +154,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    // ============================================
+    // 7. EFECTO MAGNÉTICO/SINESTÉSICO EN NARRATIVAS
+    // ============================================
+    const narrativasVisual = document.querySelector('.narrativas-visual');
+    const narrativasImg = document.querySelector('.narrativas-visual .card-img');
+
+    if (narrativasVisual && narrativasImg) {
+        narrativasVisual.addEventListener('mousemove', (e) => {
+            const rect = narrativasVisual.getBoundingClientRect();
+            // Calcula la posición del cursor de -1 a 1
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+            // Movemos la imagen sutilmente en la dirección opuesta al ratón (efecto ventana)
+            gsap.to(narrativasImg, {
+                x: -x * 40, // 40px de paneo
+                y: -y * 40,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+
+        narrativasVisual.addEventListener('mouseleave', () => {
+            // Regresa al centro suavemente cuando quitas el ratón
+            gsap.to(narrativasImg, {
+                x: 0,
+                y: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+        });
+    }
+    
 });
 
