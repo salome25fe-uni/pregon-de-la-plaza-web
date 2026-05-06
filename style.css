@@ -1298,3 +1298,208 @@ button {
   .dossier-data li { font-size: 12px; }
   .stamp-name { font-size: 28px; }
 }
+
+/* ============================================
+   SECCIÓN MAPA TEASER (CARTOGRAFÍA VIVA)
+   ============================================ */
+.mapa-teaser {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--carbon);
+  border-bottom: 2px solid var(--bone);
+}
+
+.cta-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* La apagamos casi por completo para generar misterio */
+  filter: grayscale(100%) brightness(0.3) contrast(1.2);
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
+  z-index: 1;
+}
+
+/* Al pasar el mouse recupera un poco su color morado/cálido */
+.mapa-teaser:hover .cta-bg-img {
+  transform: scale(1.05);
+  filter: grayscale(30%) brightness(0.5) contrast(1.1); 
+}
+
+/* Overlay estilo Cuadrícula Topográfica (Grid) */
+.overlay-radar {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: 
+    linear-gradient(rgba(var(--rgb-bone), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--rgb-bone), 0.05) 1px, transparent 1px);
+  background-size: 60px 60px; /* Tamaño de los cuadros */
+  pointer-events: none; /* Deja pasar los clicks al fondo */
+}
+
+/* --- Tarjeta Central Brutalista --- */
+.mapa-cta-card {
+  position: relative;
+  z-index: 5;
+  background: var(--bone);
+  max-width: 900px;
+  padding: 60px 80px;
+  border: 4px solid var(--carbon);
+  /* Sombra verde dura que da el efecto 3D */
+  box-shadow: -20px 20px 0px var(--green); 
+  transform: rotate(-1.5deg); /* Ligera inclinación irreverente */
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+}
+
+/* Interacción de la tarjeta: Se endereza y cambia de sombra */
+.mapa-teaser:hover .mapa-cta-card {
+  transform: rotate(0deg) translateY(-10px);
+  box-shadow: -25px 25px 0px var(--yellow); 
+}
+
+.mapa-cta-card .cta-headline {
+  font-family: var(--font-disp);
+  font-size: clamp(50px, 7vw, 100px);
+  line-height: 0.85;
+  text-transform: uppercase;
+  margin: 15px 0 25px;
+}
+
+.mapa-cta-card .cta-body {
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 650px;
+  color: var(--carbon-light);
+}
+
+/* --- Área de botones y coordenadas --- */
+.mapa-action {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.btn-mapa-brutal {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-disp);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--bone);
+  background: var(--carbon);
+  padding: 18px 40px;
+  border: 2px solid var(--carbon);
+  border-radius: 50px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-mapa-brutal:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translateY(-4px);
+  color: var(--bone);
+  box-shadow: 0 10px 20px rgba(var(--rgb-red), 0.4);
+}
+
+.coord-text {
+  font-family: monospace; /* Tipografía de computadora antigua/radar */
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green); /* Verde de radar */
+  letter-spacing: 0.1em;
+  background: rgba(var(--rgb-green), 0.1);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+/* --- CAPA EXPLÍCITA DE MAPA (PINES Y RUTAS) --- */
+.map-ui-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* Por encima del fondo, por debajo de la tarjeta */
+  pointer-events: none; /* Para no bloquear clicks */
+  will-change: transform; /* Preparado para el Parallax JS */
+}
+
+/* La línea punteada animada */
+.map-route-line {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.map-route-line path {
+  fill: none;
+  stroke: var(--yellow);
+  stroke-width: 0.3;
+  stroke-dasharray: 2 4;
+  opacity: 0.6;
+  animation: dashMove 30s linear infinite reverse; /* Las hormiguitas moviéndose */
+}
+
+@keyframes dashMove {
+  to { stroke-dashoffset: 100; }
+}
+
+/* Los pines de ubicación */
+.map-pin {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pin-label {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-disp);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bone);
+  background: rgba(var(--rgb-carbon), 0.9);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(var(--rgb-bone), 0.2);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+/* Animaciones de radar/pulso con los colores de la marca */
+.pulse-red { background: var(--red); box-shadow: 0 0 0 0 rgba(var(--rgb-red), 0.7); animation: pulseR 2s infinite; }
+.pulse-yellow { background: var(--yellow); box-shadow: 0 0 0 0 rgba(var(--rgb-yellow), 0.7); animation: pulseY 2s infinite 0.7s; }
+.pulse-green { background: var(--green); box-shadow: 0 0 0 0 rgba(var(--rgb-green), 0.7); animation: pulseG 2s infinite 1.4s; }
+
+@keyframes pulseR { 70% { box-shadow: 0 0 0 20px rgba(var(--rgb-red), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--rgb-red), 0); } }
+@keyframes pulseY { 70% { box-shadow: 0 0 0 20px rgba(var(--rgb-yellow), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--rgb-yellow), 0); } }
+@keyframes pulseG { 70% { box-shadow: 0 0 0 20px rgba(var(--rgb-green), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--rgb-green), 0); } }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .mapa-cta-card {
+    padding: 40px 25px;
+    margin: 0 20px;
+    transform: rotate(0deg);
+    box-shadow: -10px 10px 0px var(--green);
+  }
+  .mapa-teaser:hover .mapa-cta-card {
+    transform: translateY(-5px);
+    box-shadow: -15px 15px 0px var(--yellow);
+  }
+}

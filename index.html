@@ -305,13 +305,43 @@
 </section>
 
 <section class="mapa-teaser gsap-reveal">
+  <!-- Fondo fotográfico con efecto de radar -->
   <img src="IMAGENES/cajas moradas.JPG" alt="Cajas logísticas en la plaza" class="cta-bg-img">
-  <div class="cta-overlay overlay-green-strong"></div>
-  <div class="archivo-cta-content text-center mx-auto">
-    <div class="section-eyebrow accent-yellow">NUESTRO BARRIO GRANDE</div>
-    <h2 class="cta-headline">14 PLAZAS,<br><span class="accent-script outline-text-bone">Un Solo Corazón</span></h2>
-    <p class="cta-body mx-auto">¿Dónde late de verdad el Eje Cafetero? Ubicate en nuestro mapa y navegá desde el voleo de camiones en Mercasa hasta el trato bacano de la Minorista Impala.</p>
-    <a href="mapa.html" class="btn-yellow mt-4">ABRIR EL MAPA ⌖</a>
+  <div class="overlay-radar"></div>
+
+  <!-- NUEVO: Capa explícita de Mapa (Rutas y Pines) -->
+  <div class="map-ui-layer">
+    <!-- Línea de ruta conectando puntos -->
+    <svg class="map-route-line" preserveAspectRatio="none" viewBox="0 0 100 100">
+      <path d="M 20 30 Q 50 10 80 40 T 70 80" />
+    </svg>
+    
+    <!-- Pines de locación parpadeantes -->
+    <div class="map-pin pulse-red" style="top: 30%; left: 20%;">
+      <span class="pin-label">MERCASA</span>
+    </div>
+    <div class="map-pin pulse-yellow" style="top: 40%; left: 80%;">
+      <span class="pin-label">CENTRO</span>
+    </div>
+    <div class="map-pin pulse-green" style="top: 80%; left: 70%;">
+      <span class="pin-label">IMPALA</span>
+    </div>
+    <div class="map-pin pulse-red" style="top: 70%; left: 15%;">
+      <span class="pin-label">CUBA</span>
+    </div>
+  </div>
+
+  <!-- Tarjeta de Contenido Brutalista (Tiquete) -->
+  <div class="mapa-cta-card">
+    <div class="section-eyebrow accent-red">CARTOGRAFÍA VIVA</div>
+    <h2 class="cta-headline text-carbon">14 PLAZAS,<br><span class="accent-script accent-green">Un Solo Corazón</span></h2>
+    <p class="cta-body text-carbon">¿Dónde late de verdad el Eje Cafetero? Ubicate en nuestro mapa y navegá desde el voleo de camiones en Mercasa hasta el trato bacano de la Minorista Impala.</p>
+    
+    <div class="mapa-action">
+        <a href="mapa.html" class="btn-mapa-brutal">ABRIR EL MAPA ⌖</a>
+        <!-- Este texto de coordenadas cobrará vida con JavaScript -->
+        <span class="coord-text">LAT: 4.8133 / LON: -75.6961</span>
+    </div>
   </div>
 </section>
 

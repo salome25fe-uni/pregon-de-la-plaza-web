@@ -211,5 +211,43 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
     
+    // ============================================
+    // 9. RASTREADOR Y PARALLAX DE MAPA
+    // ============================================
+    const mapaTeaser = document.querySelector('.mapa-teaser');
+    const coordText = document.querySelector('.coord-text');
+    const mapUiLayer = document.querySelector('.map-ui-layer'); // La nueva capa de pines
+
+    if (mapaTeaser && coordText) {
+        mapaTeaser.addEventListener('mousemove', (e) => {
+            const rect = mapaTeaser.getBoundingClientRect();
+            
+            // 1. Cálculos para las Coordenadas (Modo radar)
+            const lat = (4.8133 + ((e.clientY - rect.top) / rect.height) * 0.0500).toFixed(4);
+            const lon = (-75.6961 + ((e.clientX - rect.left) / rect.width) * 0.0500).toFixed(4);
+            coordText.textContent = `LAT: ${lat} / LON: ${lon}`;
+
+            // 2. Parallax de la capa de mapa (Para que los pines floten)
+            if(mapUiLayer) {
+                const xPos = (e.clientX - rect.left) / rect.width - 0.5;
+                const yPos = (e.clientY - rect.top) / rect.height - 0.5;
+                
+                // Movemos los pines en la dirección del mouse para crear profundidad
+                gsap.to(mapUiLayer, {
+                    x: xPos * 40,
+                    y: yPos * 40,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            }
+        });
+
+        // Al sacar el mouse, todo vuelve a su sitio suavemente
+        mapaTeaser.addEventListener('mouseleave', () => {
+            if(mapUiLayer) {
+                gsap.to(mapUiLayer, { x: 0, y: 0, duration: 1.5, ease: "power3.out" });
+            }
+        });
+    }
 });
 
