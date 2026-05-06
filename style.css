@@ -81,6 +81,35 @@ button {
   font-family: inherit;
 }
 
+/* ============================================
+   CURSORES PERSONALIZADOS (FRUTAS)
+   ============================================ */
+
+/* 1. Cursor por defecto en toda la página (El Banano) */
+body {
+  cursor: url('IMAGENES/banano-cursor.png') 2 2, auto;
+}
+
+/* 2. Cursor interactivo para enlaces y botones (La Piña) */
+a, button, .menu-item, .fanzine-wrapper, .abundancia-card {
+  /* Ponemos "pointer" al final por si la imagen falla, el navegador use la manito normal */
+  cursor: url('IMAGENES/pina-cursor.png') 16 16, pointer !important;
+}
+
+/* 3. Cursor alternativo para textos o elementos específicos (El Limón) */
+p, h1, h2, h3, .texto-informativo {
+  /* Opcional: Si quieres que el texto cambie al limón cuando lo vayas a leer */
+  cursor: url('IMAGENES/limon-cursor.png') 16 16, text;
+}
+/* 4. Cursor de cruz/exploración (La Fresa) */
+.abundancia-card, 
+.narrativas-visual, 
+.postal-card,
+.fresa-cursor {
+  /* Ponemos el punto de interacción en el centro de la fresa (16 16) */
+  cursor: url('IMAGENES/fresa-cursor.png') 16 16, crosshair !important;
+}
+
 /* =============================
    CLASES DE UTILIDAD GLOBALES
    ============================= */
