@@ -531,3 +531,53 @@ button {
   .menu-desc { display: none; } /* Ocultamos la descripción en móvil para no saturar */
 }
 
+/* ============================================
+   SECCIÓN RAÍCES (MANIFIESTO)
+   ============================================ */
+
+.manifesto {
+  position: relative; 
+  overflow: hidden; /* Vital para que la palabra gigante no cree scroll horizontal al moverse */
+  padding: 120px 40px;
+  background: var(--bone);
+  color: var(--carbon);
+  border-bottom: 2px solid rgba(var(--rgb-carbon), 0.1);
+}
+
+.manifesto-bg-word {
+  position: absolute; 
+  /* La pegamos a la derecha para que el JS tenga espacio de moverla a la izquierda */
+  right: -5%; 
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-disp);
+  font-size: clamp(150px, 25vw, 400px); /* Letra exageradamente gigante para el estilo brutalista */
+  color: rgba(var(--rgb-carbon), 0.04); /* Un negro carbón super transparente */
+  pointer-events: none; 
+  user-select: none;
+  z-index: 1;
+  white-space: nowrap; /* Evita que la palabra se rompa en dos líneas */
+}
+
+.manifesto-left {
+  position: relative; 
+  z-index: 2; /* Asegura que el texto principal quede por encima de la palabra gigante */
+  max-width: 900px;
+}
+
+.manifesto-headline {
+  font-family: var(--font-disp);
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 0.95; 
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.manifesto-sub {
+  font-family: var(--font-body);
+  font-size: 20px; 
+  font-weight: 400; 
+  color: var(--carbon-light);
+  max-width: 500px; 
+  line-height: 1.6;
+}

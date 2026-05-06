@@ -101,4 +101,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         animTicker();
     }
+
+    // ============================================
+    // 3. INTERACCIÓN HERO: EL LENTE DE LA MEMORIA
+    // ============================================
+    const heroSection = document.querySelector('.hero');
+    const colorLayer = document.querySelector('.hero-bg-color');
+
+    if(heroSection && colorLayer) {
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            gsap.to(colorLayer, {
+                '--mask-x': `${x}px`,
+                '--mask-y': `${y}px`,
+                '--mask-r': '250px', 
+                duration: 0.3, 
+                ease: "power2.out"
+            });
+            
+            const xPos = (x / rect.width - 0.5);
+            const yPos = (y / rect.height - 0.5);
+            gsap.to('.hero-title', { x: -xPos * 30, y: -yPos * 30, duration: 1 });
+            gsap.to('.hero-script', { x: -xPos * 60, y: -yPos * 60, duration: 1 });
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            gsap.to(colorLayer, {
+                '--mask-r': '0px',
+                duration: 0.8, 
+                ease: "power3.out"
+            });
+            gsap.to(['.hero-title', '.hero-script'], { x: 0, y: 0, duration: 1 });
+        });
+    }
+
+    // ============================================
+    // 3.5 PARALLAX TIPOGRÁFICO: SECCIÓN "RAÍCES"
+    // ============================================
+    const bgWord = document.querySelector('.manifesto-bg-word');
+    if (bgWord) {
+        gsap.to(bgWord, {
+            x: -400, 
+            ease: "none", 
+            scrollTrigger: {
+                trigger: ".manifesto",
+                start: "top bottom", 
+                end: "bottom top", 
+                scrub: 1 
+            }
+        });
+    }
 });
+
