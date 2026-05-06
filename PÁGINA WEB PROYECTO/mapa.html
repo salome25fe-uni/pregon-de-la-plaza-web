@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Interactivo - Pregón de la Plaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Fredoka:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Yellowtail&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand-link">
+    <img src="IMAGENES/logo.png" alt="Logo Pregón de la Plaza" class="nav-logo">
+  </a>
+  
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">ARCHIVO</a>
+    <a href="plazas.html" class="nav-link">PLAZAS</a>
+    <a href="narrativas.html" class="nav-link">NARRATIVAS</a>
+    <a href="mapa.html" class="nav-link active">MAPA</a>
+    <a href="nosotros.html" class="nav-link">NOSOTROS</a>
+    <a href="recuerdos.html" class="nav-link">RECUERDOS</a>
+  </div>
+  
+  <div class="nav-auth">
+    <a href="#" class="nav-login">Ingresar</a>
+    <a href="#" class="nav-register">Registrarse</a>
+  </div>
+</nav>
+
+<header class="mapa-header text-center">
+  <div class="section-eyebrow accent-yellow mt-4">CARTOGRAFÍA VIVA</div>
+  <h1 class="mapa-title text-bone">
+    EL TERRITORIO<br>
+    <span class="accent-script accent-green">Mapeado</span>
+  </h1>
+  <p class="hero-body mx-auto">Explora la red comercial del Eje Cafetero. Pasa el cursor sobre los puntos para descubrir el expediente de cada plaza de mercado.</p>
+</header>
+
+<section class="mapa-interactivo-section">
+  
+  <div class="mapa-ui-wrapper">
+    <div class="mapa-sidebar">
+      <div class="mapa-status">
+        <span class="status-dot"></span>
+        <span class="tecnico-text">SISTEMA EN LÍNEA</span>
+      </div>
+      <div class="mapa-data-box">
+        <span class="tecnico-text accent-yellow">REGIÓN ACTIVA:</span>
+        <p class="tecnico-text text-bone">EJE CAFETERO<br>COLOMBIA</p>
+      </div>
+      <div class="mapa-data-box">
+        <span class="tecnico-text accent-yellow">PLAZAS REGISTRADAS:</span>
+        <p class="tecnico-text text-bone" style="font-size: 24px;">14</p>
+      </div>
+    </div>
+
+    <div class="mapa-container">
+      
+      <div class="mapa-background"></div>
+
+      <div class="map-pin-group" style="top: 30%; left: 45%;">
+        <div class="map-pin pulse-red"></div>
+        <div class="map-popup">
+          <img src="IMAGENES/Carga 1.JPG" alt="Plaza Impala" class="popup-img">
+          <div class="popup-info">
+            <span class="popup-city accent-yellow">PEREIRA</span>
+            <h3 class="popup-name text-carbon">Plaza Impala</h3>
+            <a href="archivo.html" class="popup-link">VER EXPEDIENTE →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-pin-group" style="top: 55%; left: 40%;">
+        <div class="map-pin pulse-green"></div>
+        <div class="map-popup">
+          <img src="IMAGENES/Papas y cajas.JPG" alt="Mercasa" class="popup-img">
+          <div class="popup-info">
+            <span class="popup-city accent-green">PEREIRA (SUR)</span>
+            <h3 class="popup-name text-carbon">Mercasa</h3>
+            <a href="archivo.html" class="popup-link">VER EXPEDIENTE →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-pin-group" style="top: 20%; left: 60%;">
+        <div class="map-pin pulse-yellow"></div>
+        <div class="map-popup">
+          <img src="IMAGENES/Canasta 1.JPG" alt="Santa Rosa" class="popup-img">
+          <div class="popup-info">
+            <span class="popup-city accent-red">SANTA ROSA</span>
+            <h3 class="popup-name text-carbon">La Galería</h3>
+            <a href="archivo.html" class="popup-link">VER EXPEDIENTE →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-pin-group" style="top: 10%; left: 75%;">
+        <div class="map-pin pulse-red"></div>
+        <div class="map-popup popup-left"> <img src="IMAGENES/Frijol manos.JPG" alt="Manizales" class="popup-img">
+          <div class="popup-info">
+            <span class="popup-city accent-yellow">MANIZALES</span>
+            <h3 class="popup-name text-carbon">Plaza Central</h3>
+            <a href="archivo.html" class="popup-link">VER EXPEDIENTE →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-pin-group" style="top: 75%; left: 35%;">
+        <div class="map-pin pulse-green"></div>
+        <div class="map-popup popup-up"> <img src="IMAGENES/Carro.JPG" alt="Armenia" class="popup-img">
+          <div class="popup-info">
+            <span class="popup-city accent-green">ARMENIA</span>
+            <h3 class="popup-name text-carbon">Minorista Armenia</h3>
+            <a href="archivo.html" class="popup-link">VER EXPEDIENTE →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">PREGÓN DE LA PLAZA</div>
+    <div class="footer-tagline">© 2026 PREGÓN DE LA PLAZA — LA VOZ QUE SE ESCUCHA</div>
+  </div>
+  <div class="footer-bar">
+    <div class="footer-nav">
+      <a href="#" class="accent-green">ARCHIVO</a>
+      <a href="#" class="accent-yellow">PLAZAS</a>
+      <a href="#" class="accent-red">CULTURA</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
