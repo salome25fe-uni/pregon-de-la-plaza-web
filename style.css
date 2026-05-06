@@ -299,18 +299,44 @@ button {
   overflow: hidden;
 }
 
-.hero-bg-img {
+/* 1. Capa de fondo base: Oscura, representa el estigma */
+.hero-bg-bw {
   position: absolute; 
   inset: 0; 
+  width: 100vw; 
+  height: 100vh; 
+  object-fit: cover; 
+  filter: grayscale(100%) brightness(0.3) contrast(1.2);
   z-index: 1;
 }
 
+/* 2. Capa de color: Oculta por defecto con clip-path */
+.hero-bg-color {
+  position: absolute; 
+  inset: 0; 
+  width: 100vw; 
+  height: 100vh; 
+  object-fit: cover; 
+  z-index: 2;
+  filter: saturate(1.2) contrast(1.1); 
+  
+  /* Truco Senior: Variables CSS */
+  --mask-x: 50vw;
+  --mask-y: 50vh;
+  --mask-r: 0px; /* Inicia oculto */
+  
+  /* Aplicamos las variables al clip-path */
+  clip-path: circle(var(--mask-r) at var(--mask-x) var(--mask-y));
+  -webkit-clip-path: circle(var(--mask-r) at var(--mask-x) var(--mask-y));
+}
+
+/* 3. El overlay pasa al z-index 3 para no estorbar la máscara */
 .hero-overlay {
   position: absolute; 
   inset: 0; 
-  z-index: 2;
-  /* Gradiente para asegurar que el texto se lea sobre cualquier foto */
-  background: linear-gradient(to bottom, rgba(var(--rgb-carbon), 0.3) 0%, rgba(var(--rgb-carbon), 0.8) 100%);
+  z-index: 3;
+  background: linear-gradient(to bottom, rgba(var(--rgb-carbon), 0.2) 0%, rgba(var(--rgb-carbon), 0.6) 100%);
+  pointer-events: none; /* Evita que choque con el ratón */
 }
 
 .hero-content {
@@ -323,19 +349,21 @@ button {
 
 .hero-title {
   font-family: var(--font-disp);
-  font-size: clamp(80px, 12vw, 160px);
-  line-height: 0.85; 
+  font-size: clamp(70px, 12vw, 150px);
+  line-height: 0.8; /* Juntamos las líneas verticalmente */
   color: var(--yellow);
   text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
 .hero-script {
   font-family: var(--font-script);
-  font-size: clamp(50px, 8vw, 100px);
+  font-size: clamp(60px, 9vw, 110px);
   color: var(--red);
   text-transform: lowercase;
   display: inline-block;
-  transform: translateY(-10px);
+  margin: 0 -15px; /* Acerca la palabra a los bordes de PREGÓN y PLAZA */
+  transform: translateY(-8px) rotate(-4deg); /* Lo rotamos un poco para darle rebeldía manual */
 }
 
 .hero-highlight {
@@ -349,6 +377,30 @@ button {
   color: var(--bone); 
   margin: 30px auto; 
   max-width: 500px;
+}
+
+.btn-primary {
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-disp);
+  font-size: 15px; 
+  font-weight: 600; 
+  letter-spacing: 0.1em;
+  padding: 16px 40px; 
+  border-radius: 50px; 
+  color: var(--bone) !important; /* Forzamos el color hueso */
+  background-color: var(--green) !important; /* Forzamos el fondo verde */
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-top: 30px;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover { 
+  transform: translateY(-4px); 
+  background-color: var(--carbon) !important; 
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
 }
 
 /* ═══ BOTÓN TOMATE (REEMPLAZO DEL MENÚ) ════════════ */
@@ -413,3 +465,4 @@ button {
   .hero-photo-tag { bottom: 20px; left: 20px; }
   .menu-desc { display: none; } /* Ocultamos la descripción en móvil para no saturar */
 }
+
