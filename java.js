@@ -253,3 +253,100 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
+// ============================================
+    // 14. INICIALIZACIÓN DE MAPA LEAFLET
+    // ============================================
+    const mapContainer = document.getElementById('mapaPlazas');
+    
+    // Verificamos si estamos en la página del mapa y si Leaflet (L) está cargado
+    if (mapContainer && typeof L !== 'undefined') {
+        
+        // 1. Crear el mapa centrado en el Eje Cafetero
+        const mapa = L.map('mapaPlazas', {
+            zoomControl: false // Ocultamos el zoom para reposicionarlo
+        }).setView([4.8133, -75.6961], 12);
+
+        // Ubicar botones de zoom abajo a la derecha
+        L.control.zoom({ position: 'bottomright' }).addTo(mapa);
+
+        // 2. Capa de mapa base (Dark Matter de CartoDB - Gratis y sin recargas visuales)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(mapa);
+
+        // 3. Crear un Icono Brutalista (Un punto rojo intenso con borde hueso)
+        // Opcional: Podrías cambiar el html por <img src="IMAGENES/Tomate.JPG" width="30">
+        const plazaIcon = L.divIcon({
+            className: 'custom-map-marker',
+            html: `<div style="background-color: var(--red); width: 24px; height: 24px; border-radius: 50%; border: 3px solid var(--bone); box-shadow: 4px 4px 0px var(--carbon);"></div>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],   // Centra el punto
+            popupAnchor: [0, -10]   // Hace que el popup salga un poco más arriba
+        });
+
+
+        // 4. Base de datos de Plazas
+        const plazasDB = [
+            {
+                nombre: "Minorista Impala",
+                ciudad: "PEREIRA",
+                lat: 4.8105,
+                lon: -75.6980, 
+                desc: "El trato bacano, el fiado y el mercado tradicional en pleno centro de la ciudad.",
+                img: "IMAGENES/Papa y canasta.JPG",
+                link: "plazas.html" // Esto los llevará al directorio que hicimos
+            },
+            {
+                nombre: "Mercasa Mayorista",
+                ciudad: "PEREIRA",
+                lat: 4.7950,
+                lon: -75.7200,
+                desc: "El gigante de la madrugada. Donde se mueven las toneladas que alimentan la región.",
+                img: "IMAGENES/cajas moradas.JPG",
+                link: "plazas.html"
+            },
+            {
+                nombre: "Galería Santa Rosa",
+                ciudad: "SANTA ROSA DE CABAL",
+                lat: 4.8667,
+                lon: -75.6167,
+                desc: "Sabor a campo, embutidos y la tradición campesina intacta.",
+                img: "IMAGENES/Hojas.JPG",
+                link: "plazas.html"
+            },
+            {
+                nombre: "Plaza de Mercado Cartago",
+                ciudad: "CARTAGO",
+                lat: 4.7469,
+                lon: -75.9119,
+                desc: "Corazón comercial e histórico del norte del Valle. Un espacio de tradición y resistencia campesina.",
+                img: "IMAGENES/Tomate.JPG", // Pon la aquí la foto de Cartago cuando la tengas
+                link: "plazas.html"
+            }
+            
+    
+        ];
+
+        // 5. Pintar los marcadores en el mapa
+        plazasDB.forEach(plaza => {
+            const marker = L.marker([plaza.lat, plaza.lon], { icon: plazaIcon }).addTo(mapa);
+
+            // Plantilla HTML del Popup (Con nuestras clases CSS)
+            const popupHTML = `
+                <div class="popup-brutal">
+                    <img src="${plaza.img}" alt="${plaza.nombre}" class="popup-img">
+                    <div class="popup-info">
+                        <h3 class="popup-title">${plaza.nombre}</h3>
+                        <div class="popup-city">${plaza.ciudad}</div>
+                        <p class="popup-desc">${plaza.desc}</p>
+                        <a href="${plaza.link}" class="btn-popup">VER EXPEDIENTE →</a>
+                    </div>
+                </div>
+            `;
+
+            // Vincular el popup al marcador
+            marker.bindPopup(popupHTML);
+        });
+    }
