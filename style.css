@@ -2283,3 +2283,272 @@ p, h1, h2, h3, .texto-informativo {
   .map-header { flex-direction: column; align-items: flex-start; gap: 15px; }
   .map-subtitle { text-align: left; }
 }
+
+/* ============================================
+   PÁGINA INTERNA: NARRATIVAS (CULTURA)
+   ============================================ */
+
+/* --- Hero (El Cine) --- */
+.narrativas-page-hero {
+  background: var(--carbon) url('IMAGENES/Frijol manos (Grande).JPG') center/cover;
+  background-blend-mode: multiply; /* Oscurece la imagen para que resalte el texto */
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 40px;
+  position: relative;
+}
+
+.hero-tv-container {
+  background: rgba(var(--rgb-carbon), 0.85);
+  border: 4px solid var(--yellow);
+  padding: 60px 40px;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 15px 15px 0px var(--yellow);
+  backdrop-filter: blur(5px);
+  transform: rotate(-1deg);
+}
+
+.tv-title {
+  font-family: var(--font-disp);
+  font-size: clamp(50px, 8vw, 100px);
+  line-height: 0.85;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.tv-desc {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+/* --- Documentales (Facebook) --- */
+.docus-section {
+  padding: 100px 40px;
+  background: var(--bone);
+}
+
+.section-intro {
+  font-size: 18px;
+  max-width: 600px;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+.docus-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 80px auto 0;
+}
+
+.doc-card {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  background: var(--carbon);
+  border: 4px solid var(--carbon);
+  box-shadow: 15px 15px 0px rgba(0,0,0,0.8);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.doc-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Invertir el layout para la segunda tarjeta */
+.reverse-layout {
+  grid-template-columns: 1fr 1.5fr;
+}
+.reverse-layout .doc-video-wrapper { order: 2; }
+.reverse-layout .doc-info { order: 1; border-right: 4px solid var(--carbon); border-left: none; }
+
+.doc-video-wrapper {
+  position: relative;
+  width: 100%;
+  /* Relación de aspecto 16:9 para los videos de Facebook */
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+/* IMPORTANTE: Cuando pegues el iframe de FB, esta clase hará que ocupe todo el espacio */
+.doc-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Placeholder mientras metes los videos */
+.video-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-disp); font-size: 24px;
+}
+
+.doc-info {
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 4px solid var(--carbon);
+}
+
+.doc-tag {
+  font-family: var(--font-disp);
+  font-size: 13px;
+  padding: 6px 12px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 20px;
+  letter-spacing: 0.1em;
+}
+
+.doc-title {
+  font-family: var(--font-disp);
+  font-size: 38px;
+  line-height: 1;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.doc-desc {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* --- Podcast (Spotify) --- */
+.podcast-section {
+  background: var(--carbon);
+  padding: 120px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Un patrón de ondas de radio de fondo */
+.podcast-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-radial-gradient(circle at 50% 100%, transparent, transparent 20px, rgba(var(--rgb-bone), 0.05) 20px, rgba(var(--rgb-bone), 0.05) 40px);
+  pointer-events: none;
+}
+
+.podcast-header {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.podcast-massive-title {
+  font-family: var(--font-disp);
+  font-size: clamp(60px, 10vw, 150px);
+  color: var(--bone);
+  line-height: 0.85;
+  margin-bottom: 20px;
+}
+
+.podcast-intro {
+  font-size: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.podcast-grid {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* El diseño de "Cassette" */
+.podcast-cassette {
+  border: 4px solid var(--bone);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+.podcast-cassette:hover {
+  transform: translateY(-15px);
+}
+
+.cassette-top {
+  padding: 40px 30px;
+  border-bottom: 4px dashed var(--bone);
+  flex-grow: 1;
+}
+
+.cap-num {
+  font-family: var(--font-disp);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.cap-title {
+  font-family: var(--font-disp);
+  font-size: 32px;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.cap-theme {
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.cassette-bottom {
+  padding: 20px;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
+
+/* IMPORTANTE: Para que el iframe de Spotify se vea bien */
+.cassette-bottom iframe {
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+}
+
+.spotify-placeholder {
+  width: 100%;
+  height: 80px;
+  border: 2px dashed var(--carbon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-disp);
+}
+
+.border-bone { border-color: var(--bone); }
+
+/* --- Responsive Narrativas --- */
+@media (max-width: 960px) {
+  .doc-card, .reverse-layout {
+    grid-template-columns: 1fr;
+  }
+  .reverse-layout .doc-video-wrapper { order: 1; }
+  .reverse-layout .doc-info { order: 2; border-right: none; border-left: none; border-top: 4px solid var(--carbon); }
+  .doc-info { border-left: none; border-top: 4px solid var(--carbon); padding: 30px; }
+  
+  .podcast-grid { grid-template-columns: 1fr; }
+} 
