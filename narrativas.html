@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultura y Narrativas | Pregón de la Plaza</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Fredoka:wght@400;500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav-brutal">
+  <a href="index.html" class="nav-logo-link">
+    <img src="imagenes/logo (Grande).png" alt="Logo Pregón de la Plaza" class="nav-logo">
+  </a>
+  <button class="fruit-trigger" id="menuTrigger" aria-label="Abrir menú">
+    <svg viewBox="0 0 100 100" width="65" height="65" xmlns="http://www.w3.org/2000/svg" class="fruit-icon">
+        <polygon points="30,90 12,65 15,30 40,15 75,20 90,45 80,80 55,95" fill="#de0636" />
+        <polygon points="45,15 52,28 75,22 60,38 72,55 52,48 48,65 40,48 20,50 35,38 22,22 40,28" fill="#118a5f" />
+    </svg>
+  </button>
+</header>
+
+<section class="narrativas-page-hero gsap-reveal">
+  <div class="hero-tv-container">
+    <h1 class="tv-title text-bone">EL ORDEN<br><span class="accent-script accent-yellow">Invisible</span></h1>
+    <p class="tv-desc text-bone">Nuestras cápsulas documentales y el podcast 'Voces del Mercado'. Dale play a las historias de los que madrugan pa' sostener la plaza.</p>
+  </div>
+</section>
+
+<section class="docus-section gsap-reveal">
+  <div class="section-header text-center">
+    <div class="section-eyebrow accent-red">CÁPSULAS DOCUMENTALES</div>
+    <h2 class="section-headline-xl text-carbon">LOS ROSTROS<br><span class="accent-script accent-green">del mercado</span></h2>
+    <p class="section-intro mx-auto text-carbon">¿Cómo ven y habitan la plaza los comerciantes? Cada personaje nos cuenta su versión de la historia. Dale play a nuestros episodios en video.</p>
+  </div>
+
+  <div class="docus-grid">
+    <article class="doc-card">
+      <div class="doc-video-wrapper">
+        <div class="video-placeholder bg-carbon">
+            <span class="text-bone">VIDEO FACEBOOK 1</span>
+        </div>
+      </div>
+      <div class="doc-info bg-bone">
+        <span class="doc-tag bg-yellow text-carbon">EPISODIO 01</span>
+        <h3 class="doc-title text-carbon">La Minorista desde Adentro</h3>
+        <p class="doc-desc text-carbon-light">Una mirada íntima a cómo los comerciantes habitan La Minorista Impala. Historias de resistencia y trato humano.</p>
+      </div>
+    </article>
+
+    <article class="doc-card reverse-layout">
+      <div class="doc-video-wrapper">
+        <div class="video-placeholder bg-carbon">
+            <span class="text-bone">VIDEO FACEBOOK 2</span>
+        </div>
+      </div>
+      <div class="doc-info bg-bone">
+        <span class="doc-tag bg-red text-bone">EPISODIO 02</span>
+        <h3 class="doc-title text-carbon">El Monstruo de Mercasa</h3>
+        <p class="doc-desc text-carbon-light">El gigante de la madrugada. Acompañamos a los coteros y transportadores que mueven las toneladas que alimentan la ciudad.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="podcast-section gsap-reveal">
+  <div class="podcast-bg-pattern"></div>
+  
+  <div class="podcast-header">
+    <h2 class="podcast-massive-title text-bone">VOCES DEL<br>MERCADO</h2>
+    <p class="podcast-intro text-bone">Extiende la narrativa. Historias íntimas, sueños y rutinas en cápsulas sonoras de 4 minutos. Escucha a los verdaderos protagonistas.</p>
+  </div>
+
+  <div class="podcast-grid">
+    
+    <div class="podcast-cassette card-yellow">
+      <div class="cassette-top">
+        <span class="cap-num">CAPÍTULO 1</span>
+        <h3 class="cap-title">Vivir de esto</h3>
+        <p class="cap-theme">El trabajo en la plaza como oficio aprendido desde la experiencia y la práctica diaria.</p>
+      </div>
+      <div class="cassette-bottom">
+        <div class="spotify-placeholder">IFRAME SPOTIFY CAP 1</div>
+      </div>
+    </div>
+
+    <div class="podcast-cassette card-green">
+      <div class="cassette-top">
+        <span class="cap-num text-bone">CAPÍTULO 2</span>
+        <h3 class="cap-title text-bone">Gente que se vuelve familia</h3>
+        <p class="cap-theme text-bone">Las relaciones y formas de convivir que construyen comunidad dentro de la plaza.</p>
+      </div>
+      <div class="cassette-bottom">
+        <div class="spotify-placeholder border-bone text-bone">IFRAME SPOTIFY CAP 2</div>
+      </div>
+    </div>
+
+    <div class="podcast-cassette card-red">
+      <div class="cassette-top">
+        <span class="cap-num text-bone">CAPÍTULO 3</span>
+        <h3 class="cap-title text-bone">Más que un trabajo</h3>
+        <p class="cap-theme text-bone">La plaza como un espacio que, además de trabajo, forma maneras de ser, pensar y hacer.</p>
+      </div>
+      <div class="cassette-bottom">
+        <div class="spotify-placeholder border-bone text-bone">IFRAME SPOTIFY CAP 3</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="java.js"></script>
+</body>
+</html>
