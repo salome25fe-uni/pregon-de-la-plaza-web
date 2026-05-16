@@ -488,58 +488,122 @@ document.addEventListener('DOMContentLoaded', () => {
             proyector3D.classList.remove('activo');
         });
 
-        // 5. LÓGICA DE CONTROL DEL MODAL DE SUBIDA (UPLOAD)
+        // 5. LÓGICA DE CONTROL DEL MODAL DE SUBIDA REAL (DRAG & DROP)
         const btnAbrir = document.getElementById('btnAbrirUpload');
         const modalUpload = document.getElementById('uploadModal');
         const btnCerrar = document.getElementById('btnCerrarUpload');
         const btnPublicar = document.getElementById('btnPublicarSimulado');
 
+        const dropzoneContainer = document.getElementById('dropzoneContainer');
+        const fileInputReal = document.getElementById('fileInputReal');
+        const btnExplorarReal = document.getElementById('btnExplorarReal');
+        const dropzoneContent = document.getElementById('dropzoneContent');
+        const imagePreview = document.getElementById('imagePreview');
+        
+        let uploadedImageUrl = null; // Aquí guardaremos la foto real
+
         if (btnAbrir && modalUpload && btnCerrar) {
+            // Abrir y cerrar modal
             btnAbrir.addEventListener('click', () => modalUpload.classList.add('is-open'));
             btnCerrar.addEventListener('click', () => modalUpload.classList.remove('is-open'));
 
-            // Simulación en tiempo real para descrestar al profesor en la entrega
-            btnPublicar.addEventListener('click', () => {
-                const autorVal = document.getElementById('formAutor').value || "@Anonimo";
-                const notaVal = document.getElementById('formNota').value || "Mucha abundancia en la galería.";
+            // --- LÓGICA DE SELECCIÓN DE ARCHIVOS ---
+            const triggerFileInput = (e) => { e.preventDefault(); fileInputReal.click(); };
+            
+            dropzoneContainer.addEventListener('click', triggerFileInput);
+            btnExplorarReal.addEventListener('click', (e) => { e.stopPropagation(); fileInputReal.click(); });
 
-                // Creamos un nuevo nodo div con clases brutalistas listo para inyectarse en el lienzo
+            // Cuando el usuario elige la foto del sistema
+            fileInputReal.addEventListener('change', function() {
+                if (this.files && this.files[0]) procesarArchivo(this.files[0]);
+            });
+
+            // --- LÓGICA DRAG & DROP ---
+            dropzoneContainer.addEventListener('dragover', (e) => {
+                e.preventDefault(); dropzoneContainer.classList.add('dragover');
+            });
+            dropzoneContainer.addEventListener('dragleave', (e) => {
+                e.preventDefault(); dropzoneContainer.classList.remove('dragover');
+            });
+            dropzoneContainer.addEventListener('drop', (e) => {
+                e.preventDefault(); dropzoneContainer.classList.remove('dragover');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    procesarArchivo(e.dataTransfer.files[0]);
+                }
+            });
+
+            // Función para procesar y mostrar la imagen real
+            function procesarArchivo(file) {
+                if (!file.type.startsWith('image/')) {
+                    alert("¡Ey! Solo aceptamos imágenes (JPG, PNG).");
+                    return;
+                }
+                // Magia: crea una URL local del archivo recién subido
+                uploadedImageUrl = URL.createObjectURL(file);
+                imagePreview.src = uploadedImageUrl;
+                imagePreview.style.display = 'block';
+                dropzoneContent.style.display = 'none'; // Esconde el texto
+            }
+
+            // --- LÓGICA DE PUBLICACIÓN ---
+            btnPublicar.addEventListener('click', () => {
+                // Validación: ¡No dejamos publicar sin foto!
+                if (!uploadedImageUrl) {
+                    alert("Falta la fotografía. ¡Arrastra o selecciona una imagen primero!");
+                    return;
+                }
+
+                const autorVal = document.getElementById('formAutor').value || "Vecino Anónimo";
+                const notaVal = document.getElementById('formNota').value || "Sin palabras, solo la memoria viva de nuestra plaza.";
+
+                // Creamos la nueva tarjeta
                 const nuevaFoto = document.createElement('div');
                 nuevaFoto.className = "card-foto-fanzine item-click-3d polaroid-style";
-                // Posición aleatoria cerca del centro del Viewport actual para que el usuario la vea aparecer
-                const randTop = Math.floor(Math.random() * (160 - 130 + 1) + 130);
-                const randLeft = Math.floor(Math.random() * (160 - 130 + 1) + 130);
-                const randRot = Math.floor(Math.random() * (10 - (-10) + 1) + (-10));
+                const randTop = Math.floor(Math.random() * (56 - 44 + 1) + 44);
+                const randLeft = Math.floor(Math.random() * (56 - 44 + 1) + 44);
+                const randRot = Math.floor(Math.random() * (15 - (-15) + 1) + (-15));
                 
-                nuevaFoto.style = `top: ${randTop}%; left: ${randLeft}%; transform: rotate(${randRot}deg);`;
-                nuevaFoto.setAttribute('data-img', 'imagenes/Tomate.JPG'); // Imagen por defecto de la base
+                nuevaFoto.style = `top: ${randTop}%; left: ${randLeft}%; transform: rotate(${randRot}deg); z-index: 999;`;
+                
+                // Le inyectamos los datos reales
+                nuevaFoto.setAttribute('data-img', uploadedImageUrl); 
                 nuevaFoto.setAttribute('data-autor', autorVal);
                 nuevaFoto.setAttribute('data-nota', notaVal);
                 nuevaFoto.setAttribute('data-bg', 'bg-yellow');
                 nuevaFoto.setAttribute('data-text-color', 'text-carbon');
 
+                // Renderizamos la foto real en el HTML
                 nuevaFoto.innerHTML = `
                     <div class="card-frame">
-                        <img src="imagenes/Tomate.JPG" alt="Fotografía aportada">
+                        <img src="${uploadedImageUrl}" alt="Aporte" style="pointer-events: none; user-select: none;">
                     </div>
                     <span class="card-author accent-script">${autorVal}</span>
                 `;
 
-                // Re-vinculamos el evento de clic al nuevo elemento para que también se proyecte en 3D
-                nuevaFoto.addEventListener('click', () => {
-                    document.getElementById('p3dImg').setAttribute('src', 'imagenes/Tomate.JPG');
+                // Interacción de proyector 3D para la nueva foto
+                nuevaFoto.addEventListener('click', (e) => {
+                    let diffX = Math.abs(e.pageX - mouseStartClickX);
+                    let diffY = Math.abs(e.pageY - mouseStartClickY);
+                    if (diffX > 5 || diffY > 5) return; // Validación de drag
+
+                    document.getElementById('p3dImg').setAttribute('src', uploadedImageUrl);
                     document.getElementById('p3dAutor').innerText = autorVal.toUpperCase();
                     document.getElementById('p3dNota').innerText = `"${notaVal}"`;
                     document.getElementById('p3dBgColor').className = "proyector-face face-back bg-yellow text-carbon";
                     proyector3D.classList.add('activo');
                 });
 
-                // Inyección física en el DOM del muro
+                // Añadimos al DOM
                 muroContenido.appendChild(nuevaFoto);
 
-                // Limpiar inputs y cerrar modal
+                // --- RESETEAR EL FORMULARIO PARA LA PRÓXIMA ---
                 document.getElementById('formAutor').value = '';
                 document.getElementById('formNota').value = '';
+                uploadedImageUrl = null;
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+                dropzoneContent.style.display = 'flex';
+                fileInputReal.value = ''; 
                 modalUpload.classList.remove('is-open');
             });
         }

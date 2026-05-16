@@ -3392,3 +3392,12 @@ p, h1, h2, h3, .texto-informativo {
   .proyector-img-frame { height: 300px; }
   .upload-modal-box { padding: 30px 20px; }
 }
+
+/* Estilo interactivo cuando arrastras un archivo por encima */
+.upload-dropzone.dragover {
+  background: var(--yellow) !important;
+  color: var(--carbon) !important;
+  border-color: var(--carbon);
+  transform: scale(1.02);
+  transition: all 0.2s ease;
+}
