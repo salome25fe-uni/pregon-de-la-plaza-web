@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muro Colectivo | Pregón de la Plaza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Fredoka:wght@400;500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="galeria-body">
+
+<header class="nav-brutal">
+  <a href="index.html" class="nav-logo-link">
+    <img src="imagenes/logo (Grande).png" alt="Logo Pregón de la Plaza" class="nav-logo">
+  </a>
+  
+  <div class="nav-actions">
+    <a href="galeria.html" class="btn-muro-nav" aria-label="Ir al muro colectivo">
+      <img src="imagenes/canasta-icono.png" alt="Canasta de la Plaza" class="icono-canasta">
+    </a>
+    
+    <button class="fruit-trigger" id="menuTrigger" aria-label="Abrir menú">
+      <svg viewBox="0 0 100 100" width="65" height="65" xmlns="http://www.w3.org/2000/svg" class="fruit-icon">
+          <polygon points="30,90 12,65 15,30 40,15 75,20 90,45 80,80 55,95" fill="#de0636" />
+          <polygon points="45,15 52,28 75,22 60,38 72,55 52,48 48,65 40,48 20,50 35,38 22,22 40,28" fill="#118a5f" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="galeria-ui-panel">
+    <div class="tag-sticker">MEMORIA VIVA</div>
+    <h1 class="galeria-main-title">EL MURO<br><span class="accent-script accent-red">Colectivo</span></h1>
+    <p class="galeria-instruction">Usa la rueda del mouse para hacer <strong class="accent-green">Zoom In/Out</strong>. Arrastra el fondo para explorar el mercado. Toca una foto para ver su historia secreta.</p>
+</div>
+
+<button class="btn-pegar-foto" id="btnAbrirUpload">
+  <span class="btn-plus-icon">+</span> PEGAR MI FOTO
+</button>
+
+<main class="lienzo-infinito" id="lienzoMuro">
+  <div class="muro-contenido-scalable" id="muroContenido">
+      
+      <div class="card-foto-fanzine item-click-3d" style="top: 25%; left: 20%; transform: rotate(-4deg);"
+           data-img="imagenes/Papa y canasta.JPG" data-autor="@Alejo_99" data-bg="bg-yellow" data-text-color="text-carbon"
+           data-nota="El mejor bloque para mercar los domingos en La Minorista. El fiado y la buena charla nunca fallan en el puesto de papas.">
+          <div class="cinta-masking"></div>
+          <div class="card-frame">
+              <img src="imagenes/Papa y canasta.JPG" alt="Fotografía de la plaza">
+          </div>
+          <span class="card-author">POR: @Alejo_99</span>
+      </div>
+
+      <div class="card-foto-fanzine item-click-3d polaroid-style" style="top: 55%; left: 42%; transform: rotate(6deg);"
+           data-img="imagenes/cajas moradas.JPG" data-autor="Don Arturo" data-bg="bg-red" data-text-color="text-bone"
+           data-nota="A las 3:30 AM esto es un hervidero de berracos. Las cajas moradas cargadas de fruta fresca listas para inundar los barrios de Pereira.">
+          <div class="card-frame">
+              <img src="imagenes/cajas moradas.JPG" alt="Fotografía de la plaza">
+          </div>
+          <span class="card-author accent-script">Rutina de Madrugada</span>
+      </div>
+
+      <div class="card-foto-fanzine item-click-3d" style="top: 18%; left: 68%; transform: rotate(-8deg);"
+           data-img="imagenes/Hojas.JPG" data-autor="@Cata_Restrepo" data-bg="bg-green" data-text-color="text-bone"
+           data-nota="El olor a hierba buena, ruda y campo limpio que baja de la serranía directamente a la galería de Santa Rosa de Cabal. Tradición pura.">
+          <div class="cinta-masking"></div>
+          <div class="card-frame">
+              <img src="imagenes/Hojas.JPG" alt="Fotografía de la plaza">
+          </div>
+          <span class="card-author">POR: @Cata_Restrepo</span>
+      </div>
+
+      <div class="card-foto-fanzine item-click-3d polaroid-style" style="top: 62%; left: 15%; transform: rotate(-3deg);"
+           data-img="imagenes/Niña (Grande).JPG" data-autor="Archivo Barrio" data-bg="bg-carbon" data-text-color="text-bone"
+           data-nota="La plaza tiene rostros de herencia. Hijos y nietos de caseros que hoy custodian los pasillos con el mismo orgullo campesino.">
+          <div class="card-frame">
+              <img src="imagenes/Niña (Grande).JPG" alt="Fotografía de la plaza">
+          </div>
+          <span class="card-author accent-script">Nuestra Herencia</span>
+      </div>
+
+  </div>
+</main>
+
+<div class="proyector-3d-overlay" id="proyector3D">
+  <div class="proyector-perspective-wrapper">
+    <div class="proyector-card-container" id="proyectorCard">
+      
+      <div class="proyector-face face-front">
+        <div class="cinta-masking"></div>
+        <div class="proyector-img-frame">
+          <img src="" id="p3dImg" alt="Evidencia Ampliada">
+        </div>
+        <div class="proyector-meta-front" id="p3dAutor">AUTOR</div>
+      </div>
+      
+      <div class="proyector-face face-back" id="p3dBgColor">
+        <div class="cinta-masking"></div>
+        <div class="proyector-back-content">
+          <span class="stamp-doc-3d">ARCHIVO COLECTIVO</span>
+          <p class="fanzine-handwriting" id="p3dNota">"Mensaje secreto escrito a mano..."</p>
+          <div class="proyector-instruction-close">TOCA EN CUALQUIER LADO PARA VOLVER AL MURO</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="upload-modal-overlay" id="uploadModal">
+  <div class="upload-modal-box bg-bone border-carbon">
+    <button class="btn-close-upload" id="btnCerrarUpload">×</button>
+    <h2 class="upload-modal-title">APORTAR AL MURO</h2>
+    <p class="upload-modal-subtitle">Sube una foto capturada por ti en cualquier plaza y escribe tu registro o pensamiento.</p>
+    
+    <div class="upload-dropzone bg-carbon text-bone">
+      <span class="dropzone-icon">📷</span>
+      <span class="dropzone-text">ARRASTRA TU FOTO AQUÍ<br>O</span>
+      <button class="btn-fake-explorer">EXPLORAR DISPOSITIVO</button>
+    </div>
+    
+    <input type="text" class="input-brutal-modal" placeholder="Tu nombre o Instagram (@...)" id="formAutor">
+    <textarea class="textarea-brutal-modal" placeholder="¿Qué historia, aroma o recuerdo te trae esta imagen?..." id="formNota"></textarea>
+    
+    <button class="btn-submit-foto-muro bg-green text-bone" id="btnPublicarSimulado">¡PEGAR EN EL MURO COLECTIVO!</button>
+  </div>
+</div>
+
+<script src="java.js"></script>
+</body>
+</html>

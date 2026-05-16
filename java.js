@@ -400,3 +400,147 @@ document.addEventListener('DOMContentLoaded', () => {
         // Inicializar el estado de los botones al cargar
         updateCarrusel();
     }
+
+    // ==========================================================================
+    // 17. MOTOR INTERACTIVO TRANSMEDIA: LIENZO 3D Y ÁLBUM COLECTIVO
+    // ==========================================================================
+    const lienzoMuro = document.getElementById('lienzoMuro');
+    const muroContenido = document.getElementById('muroContenido');
+    const proyector3D = document.getElementById('proyector3D');
+    const proyectorCard = document.getElementById('proyectorCard');
+    
+    if (lienzoMuro && muroContenido) {
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+        let scaleFactor = 1; // Factor de Zoom inicial
+
+        // 1. Centrar la cámara en el centro del lienzo gigante de 3x3 pantallas
+        lienzoMuro.scrollLeft = (muroContenido.scrollWidth - lienzoMuro.clientWidth) / 2;
+        lienzoMuro.scrollTop = (muroContenido.scrollHeight - lienzoMuro.clientHeight) / 2;
+
+        // 2. LÓGICA DE AGARRAR Y ARRASTRAR EL LIENZO (DRAG & PAN)
+        lienzoMuro.addEventListener('mousedown', (e) => {
+            // Evitar conflictos si se hace clic en una foto interactiva
+            if (e.target.closest('.item-click-3d') || e.target.closest('#btnAbrirUpload')) return;
+            
+            isDragging = true;
+            startX = e.pageX - lienzoMuro.offsetLeft;
+            startY = e.pageY - lienzoMuro.offsetTop;
+            scrollLeft = lienzoMuro.scrollLeft;
+            scrollTop = lienzoMuro.scrollTop;
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+        
+        lienzoMuro.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - lienzoMuro.offsetLeft;
+            const y = e.pageY - lienzoMuro.offsetTop;
+            // Multiplicamos por 1.5 para aumentar la velocidad y suavidad del arrastre
+            const moveX = (x - startX) * 1.5;
+            const moveY = (y - startY) * 1.5;
+            lienzoMuro.scrollLeft = scrollLeft - moveX;
+            lienzoMuro.scrollTop = scrollTop - moveY;
+        });
+
+        // 3. LÓGICA DE ZOOM CON LA RUEDA DEL RATÓN (SCROLL-TO-ZOOM)
+        lienzoMuro.addEventListener('wheel', (e) => {
+            e.preventDefault(); // Bloquea el scroll vertical de la ventana del navegador
+            
+            // Detecta la dirección de la rueda del ratón
+            scaleFactor += e.deltaY * -0.0015;
+            // Limitamos el zoom: alejar hasta 0.45x (gran angular), acercar hasta 1.8x (detalle)
+            scaleFactor = Math.min(Math.max(0.45, scaleFactor), 1.8);
+            
+            // Inyectamos la matriz de transformación al muro
+            muroContenido.style.transform = `scale(${scaleFactor})`;
+        }, { passive: false });
+
+        // 4. LÓGICA DEL PROYECTOR MULTIMEDIA 3D (EL GIRO EN EL AIRE)
+        const fotosMuro = document.querySelectorAll('.item-click-3d');
+        
+        fotosMuro.forEach(tarjeta => {
+            tarjeta.addEventListener('click', () => {
+                // Extraemos la metadata guardada en los atributos HTML de la tarjeta
+                const srcImagen = tarjeta.getAttribute('data-img');
+                const autor = tarjeta.getAttribute('data-autor');
+                const nota = tarjeta.getAttribute('data-nota');
+                const bgClase = tarjeta.getAttribute('data-bg');
+                const textoClase = tarjeta.getAttribute('data-text-color');
+
+                // Inyectamos los datos dinámicamente al Proyector 3D fijo
+                document.getElementById('p3dImg').setAttribute('src', srcImagen);
+                document.getElementById('p3dAutor').innerText = autor.toUpperCase();
+                document.getElementById('p3dNota').innerText = `"${nota}"`;
+
+                // Limpiamos clases de color previas del dorso y aplicamos las nuevas
+                const dorso = document.getElementById('p3dBgColor');
+                dorso.className = `proyector-face face-back ${bgClase} ${textoClase}`;
+
+                // Encendemos el proyector (Se activa el blur y el giro 3D por CSS)
+                proyector3D.classList.add('activo');
+            });
+        });
+
+        // Cerrar el proyector al tocar el fondo oscuro o la tarjeta
+        proyector3D.addEventListener('click', () => {
+            proyector3D.classList.remove('activo');
+        });
+
+        // 5. LÓGICA DE CONTROL DEL MODAL DE SUBIDA (UPLOAD)
+        const btnAbrir = document.getElementById('btnAbrirUpload');
+        const modalUpload = document.getElementById('uploadModal');
+        const btnCerrar = document.getElementById('btnCerrarUpload');
+        const btnPublicar = document.getElementById('btnPublicarSimulado');
+
+        if (btnAbrir && modalUpload && btnCerrar) {
+            btnAbrir.addEventListener('click', () => modalUpload.classList.add('is-open'));
+            btnCerrar.addEventListener('click', () => modalUpload.classList.remove('is-open'));
+
+            // Simulación en tiempo real para descrestar al profesor en la entrega
+            btnPublicar.addEventListener('click', () => {
+                const autorVal = document.getElementById('formAutor').value || "@Anonimo";
+                const notaVal = document.getElementById('formNota').value || "Mucha abundancia en la galería.";
+
+                // Creamos un nuevo nodo div con clases brutalistas listo para inyectarse en el lienzo
+                const nuevaFoto = document.createElement('div');
+                nuevaFoto.className = "card-foto-fanzine item-click-3d polaroid-style";
+                // Posición aleatoria cerca del centro del Viewport actual para que el usuario la vea aparecer
+                const randTop = Math.floor(Math.random() * (160 - 130 + 1) + 130);
+                const randLeft = Math.floor(Math.random() * (160 - 130 + 1) + 130);
+                const randRot = Math.floor(Math.random() * (10 - (-10) + 1) + (-10));
+                
+                nuevaFoto.style = `top: ${randTop}%; left: ${randLeft}%; transform: rotate(${randRot}deg);`;
+                nuevaFoto.setAttribute('data-img', 'imagenes/Tomate.JPG'); // Imagen por defecto de la base
+                nuevaFoto.setAttribute('data-autor', autorVal);
+                nuevaFoto.setAttribute('data-nota', notaVal);
+                nuevaFoto.setAttribute('data-bg', 'bg-yellow');
+                nuevaFoto.setAttribute('data-text-color', 'text-carbon');
+
+                nuevaFoto.innerHTML = `
+                    <div class="card-frame">
+                        <img src="imagenes/Tomate.JPG" alt="Fotografía aportada">
+                    </div>
+                    <span class="card-author accent-script">${autorVal}</span>
+                `;
+
+                // Re-vinculamos el evento de clic al nuevo elemento para que también se proyecte en 3D
+                nuevaFoto.addEventListener('click', () => {
+                    document.getElementById('p3dImg').setAttribute('src', 'imagenes/Tomate.JPG');
+                    document.getElementById('p3dAutor').innerText = autorVal.toUpperCase();
+                    document.getElementById('p3dNota').innerText = `"${notaVal}"`;
+                    document.getElementById('p3dBgColor').className = "proyector-face face-back bg-yellow text-carbon";
+                    proyector3D.classList.add('activo');
+                });
+
+                // Inyección física en el DOM del muro
+                muroContenido.appendChild(nuevaFoto);
+
+                // Limpiar inputs y cerrar modal
+                document.getElementById('formAutor').value = '';
+                document.getElementById('formNota').value = '';
+                modalUpload.classList.remove('is-open');
+            });
+        }
+    }
