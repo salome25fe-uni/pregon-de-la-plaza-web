@@ -207,7 +207,7 @@ p, h1, h2, h3, .texto-informativo {
 }
 
 .nav-logo {
-  height: 50px;
+  height: 120px;
   width: auto;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -3369,8 +3369,28 @@ p, h1, h2, h3, .texto-informativo {
 .input-brutal-modal { margin-top: 20px; font-weight: bold; }
 .textarea-brutal-modal { margin-top: 15px; height: 100px; resize: none; }
 
-.btn-submit-foto-muro { width: 100%; padding: 16px; font-family: var(--font-disp); font-size: 18px; font-weight: bold; border: 3px solid var(--carbon); box-shadow: 6px 6px 0px var(--carbon); margin-top: 25px; transition: all 0.3s; }
-.btn-submit-foto-muro:hover { background: var(--yellow); color: var(--carbon); transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--carbon); }
+/* --- EL BOTÓN DE PUBLICAR (ARREGLADO Y BLINDADO) --- */
+.btn-submit-foto-muro { 
+  width: 100%; 
+  padding: 16px; 
+  font-family: var(--font-disp); 
+  font-size: 18px; 
+  font-weight: bold; 
+  background-color: var(--green) !important; /* Forzamos el fondo verde */
+  color: var(--bone) !important;             /* Forzamos la letra clara */
+  border: 3px solid var(--carbon); 
+  box-shadow: 6px 6px 0px var(--carbon); 
+  margin-top: 25px; 
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: pointer; /* Para que salga la manito */
+}
+
+.btn-submit-foto-muro:hover { 
+  background-color: var(--yellow) !important; 
+  color: var(--carbon) !important; 
+  transform: translate(-2px, -2px); 
+  box-shadow: 8px 8px 0px var(--carbon); 
+}
 
 /* Ajustes de Grilla Colectiva para Móviles */
 @media (max-width: 768px) {
