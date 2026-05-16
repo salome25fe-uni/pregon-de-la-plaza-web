@@ -31,38 +31,6 @@
 /* ===============================
    IDENTIDAD VISUAL & TOKENS
    =============================== */
-:root {
-  /* --- 1. COLORES OFICIALES (HEX) --- */
-  --carbon: #353535;      
-  --bone:   #f7ecbc;      
-  --green:  #118a5f;      
-  --yellow: #f7c332;      
-  --red:    #de0636;      
-
-  /* --- 2. COLORES (RGB) PARA MANEJO DE OPACIDADES --- */
-  --rgb-carbon: 53, 53, 53;
-  --rgb-bone:   247, 236, 188;
-  --rgb-green:  17, 138, 95;
-  --rgb-yellow: 247, 195, 50;
-  --rgb-red:    222, 6, 54;
-
-  /* --- 3. VARIANTES DERIVADAS --- */
-  --carbon-light: #4a4a4a;
-  --green-dark:   #0d6b49;
-  --yellow-light: #f9d05a;
-  --red-dark:     #b5052c;
-
-  /* --- 4. TIPOGRAFÍAS DEL SISTEMA (ACTUALIZADAS) --- */
-  /* Flegri y Grota Rounded para los títulos y elementos de gran peso */
-  --font-disp: 'Flegri', 'Grota Rounded', 'Fredoka', sans-serif; 
-  
-  /* Pangram Sans para textos de lectura y complementos neutros */
-  --font-body: 'Pangram Sans', 'DM Sans', sans-serif; 
-  
-  /* Tipografía de acento (manual) */
-  --font-script: 'Yellowtail', cursive; 
-}
-
 
 :root {
   /* --- 1. COLORES OFICIALES (HEX) --- */
@@ -1607,7 +1575,7 @@ p, h1, h2, h3, .texto-informativo {
 }
 
 /* ============================================
-   SECCIÓN FANZINE (LA POSTAL BRUTALISTA)
+   SECCIÓN FANZINE (LA POSTAL BRUTALISTA CORREGIDA)
    ============================================ */
 
 .fanzine-teaser {
@@ -1711,18 +1679,21 @@ p, h1, h2, h3, .texto-informativo {
   letter-spacing: 0.1em;
 }
 
+/* AQUÍ ESTABA EL ERROR: Agregamos font-family y color */
 .postal-message .section-headline-xl {
+  font-family: var(--font-disp); /* Tipografía gruesa y brutalista */
+  color: var(--carbon); /* Color negro carbón */
   font-size: clamp(40px, 4vw, 60px);
   line-height: 0.9;
   margin-bottom: 20px;
 }
 
-/* ¡El mensaje con letra a mano! */
+/* ¡El mensaje con letra a mano! (Blindado) */
 .fanzine-handwriting {
   font-family: var(--font-script);
   font-size: 28px;
   line-height: 1.4;
-  color: var(--carbon-light);
+  color: var(--carbon-light); /* Un gris oscuro tipo lápiz */
   margin-bottom: 30px;
   padding-right: 20px;
 }
@@ -1754,6 +1725,12 @@ p, h1, h2, h3, .texto-informativo {
   color: var(--bone) !important;
   border: 2px solid var(--carbon);
   align-self: flex-start;
+  /* Aseguramos la tipografía del botón también */
+  font-family: var(--font-disp);
+  padding: 12px 24px;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 .btn-carbon-hover:hover {
   background-color: var(--green) !important; /* Estalla en verde plaza */
@@ -1778,6 +1755,17 @@ p, h1, h2, h3, .texto-informativo {
   .postal-right {
     padding: 30px 0 0 0;
   }
+}
+
+/* ============================================
+   PARCHE BLINDADO: TEXTO DE LA POSTAL
+   ============================================ */
+.postal-right .fanzine-handwriting,
+.postal-message .fanzine-handwriting {
+  color: var(--carbon-light) !important; /* Forzamos el gris oscuro tipo lápiz */
+  font-size: 28px !important;            /* Forzamos el tamaño original */
+  text-align: left !important;           /* Evitamos que se centre por culpa de la galería */
+  opacity: 1 !important;                 /* Evitamos que se vuelva transparente */
 }
 
 /* ============================================
@@ -3401,3 +3389,4 @@ p, h1, h2, h3, .texto-informativo {
   transform: scale(1.02);
   transition: all 0.2s ease;
 }
+
