@@ -402,91 +402,157 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================================
-    // 17. MOTOR INTERACTIVO TRANSMEDIA: LIENZO 3D Y ÁLBUM COLECTIVO
+    // 17. MOTOR INTERACTIVO TRANSMEDIA: LIENZO 3D Y ÁLBUM COLECTIVO (ACTUALIZADO)
     // ==========================================================================
     const lienzoMuro = document.getElementById('lienzoMuro');
     const muroContenido = document.getElementById('muroContenido');
     const proyector3D = document.getElementById('proyector3D');
-    const proyectorCard = document.getElementById('proyectorCard');
     
     if (lienzoMuro && muroContenido) {
-        let isDragging = false;
+        let isDraggingCanvas = false;
         let startX, startY, scrollLeft, scrollTop;
-        let scaleFactor = 1; // Factor de Zoom inicial
+        let scaleFactor = 1;
+        let mouseStartClickX, mouseStartClickY;
 
-        // 1. Centrar la cámara en el centro del lienzo gigante de 3x3 pantallas
+        // 1. Centrar la cámara
         lienzoMuro.scrollLeft = (muroContenido.scrollWidth - lienzoMuro.clientWidth) / 2;
         lienzoMuro.scrollTop = (muroContenido.scrollHeight - lienzoMuro.clientHeight) / 2;
 
         // 2. LÓGICA DE AGARRAR Y ARRASTRAR EL LIENZO (DRAG & PAN)
         lienzoMuro.addEventListener('mousedown', (e) => {
-            // Evitar conflictos si se hace clic en una foto interactiva
-            if (e.target.closest('.item-click-3d') || e.target.closest('#btnAbrirUpload')) return;
+            // Si le dimos clic al botón de subir, o estamos arrastrando una foto personal, NO muevas el canvas
+            if (e.target.closest('#btnAbrirUpload') || e.target.closest('.foto-personal')) return;
             
-            isDragging = true;
+            isDraggingCanvas = true;
+            mouseStartClickX = e.pageX;
+            mouseStartClickY = e.pageY;
+            
             startX = e.pageX - lienzoMuro.offsetLeft;
             startY = e.pageY - lienzoMuro.offsetTop;
             scrollLeft = lienzoMuro.scrollLeft;
             scrollTop = lienzoMuro.scrollTop;
         });
 
-        window.addEventListener('mouseup', () => { isDragging = false; });
+        window.addEventListener('mouseup', () => { isDraggingCanvas = false; });
         
         lienzoMuro.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
+            if (!isDraggingCanvas) return;
             e.preventDefault();
             const x = e.pageX - lienzoMuro.offsetLeft;
             const y = e.pageY - lienzoMuro.offsetTop;
-            // Multiplicamos por 1.5 para aumentar la velocidad y suavidad del arrastre
             const moveX = (x - startX) * 1.5;
             const moveY = (y - startY) * 1.5;
             lienzoMuro.scrollLeft = scrollLeft - moveX;
             lienzoMuro.scrollTop = scrollTop - moveY;
         });
 
-        // 3. LÓGICA DE ZOOM CON LA RUEDA DEL RATÓN (SCROLL-TO-ZOOM)
+        // 3. LÓGICA DE ZOOM CON LA RUEDA DEL RATÓN
         lienzoMuro.addEventListener('wheel', (e) => {
-            e.preventDefault(); // Bloquea el scroll vertical de la ventana del navegador
-            
-            // Detecta la dirección de la rueda del ratón
+            e.preventDefault();
             scaleFactor += e.deltaY * -0.0015;
-            // Limitamos el zoom: alejar hasta 0.45x (gran angular), acercar hasta 1.8x (detalle)
             scaleFactor = Math.min(Math.max(0.45, scaleFactor), 1.8);
-            
-            // Inyectamos la matriz de transformación al muro
             muroContenido.style.transform = `scale(${scaleFactor})`;
         }, { passive: false });
 
-        // 4. LÓGICA DEL PROYECTOR MULTIMEDIA 3D (EL GIRO EN EL AIRE)
+        // 4. LÓGICA DEL PROYECTOR MULTIMEDIA 3D PARA FOTOS EXISTENTES
         const fotosMuro = document.querySelectorAll('.item-click-3d');
         
         fotosMuro.forEach(tarjeta => {
-            tarjeta.addEventListener('click', () => {
-                // Extraemos la metadata guardada en los atributos HTML de la tarjeta
+            tarjeta.addEventListener('click', (e) => {
+                let diffX = Math.abs(e.pageX - mouseStartClickX);
+                let diffY = Math.abs(e.pageY - mouseStartClickY);
+                if (diffX > 5 || diffY > 5) return; // Validación de drag
+                
                 const srcImagen = tarjeta.getAttribute('data-img');
                 const autor = tarjeta.getAttribute('data-autor');
                 const nota = tarjeta.getAttribute('data-nota');
                 const bgClase = tarjeta.getAttribute('data-bg');
                 const textoClase = tarjeta.getAttribute('data-text-color');
 
-                // Inyectamos los datos dinámicamente al Proyector 3D fijo
                 document.getElementById('p3dImg').setAttribute('src', srcImagen);
                 document.getElementById('p3dAutor').innerText = autor.toUpperCase();
                 document.getElementById('p3dNota').innerText = `"${nota}"`;
 
-                // Limpiamos clases de color previas del dorso y aplicamos las nuevas
                 const dorso = document.getElementById('p3dBgColor');
                 dorso.className = `proyector-face face-back ${bgClase} ${textoClase}`;
 
-                // Encendemos el proyector (Se activa el blur y el giro 3D por CSS)
                 proyector3D.classList.add('activo');
             });
         });
 
-        // Cerrar el proyector al tocar el fondo oscuro o la tarjeta
-        proyector3D.addEventListener('click', () => {
-            proyector3D.classList.remove('activo');
-        });
+        proyector3D.addEventListener('click', () => { proyector3D.classList.remove('activo'); });
+
+        // --- SISTEMA DE ARRASTRE PARA FOTOS PERSONALES ---
+        function HacerArrastrable(elemento) {
+            let isDraggingFoto = false;
+            let startX, startY, initialLeft, initialTop;
+
+            // Prevenimos que el clic 3D se dispare mientras arrastramos
+            let wasDragged = false;
+
+            elemento.addEventListener('mousedown', (e) => {
+                isDraggingFoto = true;
+                wasDragged = false;
+                
+                // Calculamos las coordenadas iniciales teniendo en cuenta el Zoom
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                // Leemos el porcentaje actual del elemento
+                initialLeft = parseFloat(elemento.style.left);
+                initialTop = parseFloat(elemento.style.top);
+                
+                // Lo ponemos por encima de todas para arrastrarlo cómodo
+                elemento.style.zIndex = 3000;
+                elemento.style.cursor = "grabbing";
+                e.stopPropagation(); // Evitamos que el lienzo reciba el clic
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDraggingFoto) return;
+                wasDragged = true;
+                e.preventDefault();
+
+                // Calculamos cuánto se movió el mouse, ajustado por el nivel de zoom actual
+                const deltaX = (e.clientX - startX) / scaleFactor;
+                const deltaY = (e.clientY - startY) / scaleFactor;
+
+                // Convertimos esos píxeles a porcentaje del muro (500vw / 500vh)
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                const percentX = (deltaX / (viewportWidth * 5)) * 100;
+                const percentY = (deltaY / (viewportHeight * 5)) * 100;
+
+                // Aplicamos la nueva posición
+                elemento.style.left = `${initialLeft + percentX}%`;
+                elemento.style.top = `${initialTop + percentY}%`;
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (isDraggingFoto) {
+                    isDraggingFoto = false;
+                    elemento.style.zIndex = 999;
+                    elemento.style.cursor = "url('imagenes/limon-cursor.png') 16 16, pointer";
+                }
+            });
+
+            // Re-vinculamos el evento de clic al elemento personal
+            elemento.addEventListener('click', (e) => {
+                if (wasDragged) return; // Si lo soltó después de arrastrar, no abras el 3D
+
+                const srcImagen = elemento.getAttribute('data-img');
+                const autor = elemento.getAttribute('data-autor');
+                const nota = elemento.getAttribute('data-nota');
+                
+                document.getElementById('p3dImg').setAttribute('src', srcImagen);
+                document.getElementById('p3dAutor').innerText = autor.toUpperCase();
+                document.getElementById('p3dNota').innerText = `"${nota}"`;
+                document.getElementById('p3dBgColor').className = "proyector-face face-back bg-yellow text-carbon";
+                proyector3D.classList.add('activo');
+            });
+        }
+
 
         // 5. LÓGICA DE CONTROL DEL MODAL DE SUBIDA REAL (DRAG & DROP)
         const btnAbrir = document.getElementById('btnAbrirUpload');
@@ -500,79 +566,58 @@ document.addEventListener('DOMContentLoaded', () => {
         const dropzoneContent = document.getElementById('dropzoneContent');
         const imagePreview = document.getElementById('imagePreview');
         
-        let uploadedImageUrl = null; // Aquí guardaremos la foto real
+        let uploadedImageUrl = null;
 
         if (btnAbrir && modalUpload && btnCerrar) {
-            // Abrir y cerrar modal
             btnAbrir.addEventListener('click', () => modalUpload.classList.add('is-open'));
             btnCerrar.addEventListener('click', () => modalUpload.classList.remove('is-open'));
 
-            // --- LÓGICA DE SELECCIÓN DE ARCHIVOS ---
             const triggerFileInput = (e) => { e.preventDefault(); fileInputReal.click(); };
             
             dropzoneContainer.addEventListener('click', triggerFileInput);
             btnExplorarReal.addEventListener('click', (e) => { e.stopPropagation(); fileInputReal.click(); });
 
-            // Cuando el usuario elige la foto del sistema
             fileInputReal.addEventListener('change', function() {
                 if (this.files && this.files[0]) procesarArchivo(this.files[0]);
             });
 
-            // --- LÓGICA DRAG & DROP ---
-            dropzoneContainer.addEventListener('dragover', (e) => {
-                e.preventDefault(); dropzoneContainer.classList.add('dragover');
-            });
-            dropzoneContainer.addEventListener('dragleave', (e) => {
-                e.preventDefault(); dropzoneContainer.classList.remove('dragover');
-            });
+            dropzoneContainer.addEventListener('dragover', (e) => { e.preventDefault(); dropzoneContainer.classList.add('dragover'); });
+            dropzoneContainer.addEventListener('dragleave', (e) => { e.preventDefault(); dropzoneContainer.classList.remove('dragover'); });
             dropzoneContainer.addEventListener('drop', (e) => {
                 e.preventDefault(); dropzoneContainer.classList.remove('dragover');
-                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                    procesarArchivo(e.dataTransfer.files[0]);
-                }
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) procesarArchivo(e.dataTransfer.files[0]);
             });
 
-            // Función para procesar y mostrar la imagen real
             function procesarArchivo(file) {
-                if (!file.type.startsWith('image/')) {
-                    alert("¡Ey! Solo aceptamos imágenes (JPG, PNG).");
-                    return;
-                }
-                // Magia: crea una URL local del archivo recién subido
+                if (!file.type.startsWith('image/')) { alert("Solo aceptamos imágenes."); return; }
                 uploadedImageUrl = URL.createObjectURL(file);
                 imagePreview.src = uploadedImageUrl;
                 imagePreview.style.display = 'block';
-                dropzoneContent.style.display = 'none'; // Esconde el texto
+                dropzoneContent.style.display = 'none';
             }
 
-            // --- LÓGICA DE PUBLICACIÓN ---
             btnPublicar.addEventListener('click', () => {
-                // Validación: ¡No dejamos publicar sin foto!
-                if (!uploadedImageUrl) {
-                    alert("Falta la fotografía. ¡Arrastra o selecciona una imagen primero!");
-                    return;
-                }
+                if (!uploadedImageUrl) { alert("¡Arrastra una imagen primero!"); return; }
 
                 const autorVal = document.getElementById('formAutor').value || "Vecino Anónimo";
                 const notaVal = document.getElementById('formNota').value || "Sin palabras, solo la memoria viva de nuestra plaza.";
 
-                // Creamos la nueva tarjeta
                 const nuevaFoto = document.createElement('div');
-                nuevaFoto.className = "card-foto-fanzine item-click-3d polaroid-style";
+                // Le agregamos la clase "foto-personal" para que el JS sepa que esta SÍ se puede mover
+                nuevaFoto.className = "card-foto-fanzine item-click-3d polaroid-style foto-personal";
+                
                 const randTop = Math.floor(Math.random() * (56 - 44 + 1) + 44);
                 const randLeft = Math.floor(Math.random() * (56 - 44 + 1) + 44);
                 const randRot = Math.floor(Math.random() * (15 - (-15) + 1) + (-15));
                 
                 nuevaFoto.style = `top: ${randTop}%; left: ${randLeft}%; transform: rotate(${randRot}deg); z-index: 999;`;
                 
-                // Le inyectamos los datos reales
                 nuevaFoto.setAttribute('data-img', uploadedImageUrl); 
                 nuevaFoto.setAttribute('data-autor', autorVal);
                 nuevaFoto.setAttribute('data-nota', notaVal);
                 nuevaFoto.setAttribute('data-bg', 'bg-yellow');
                 nuevaFoto.setAttribute('data-text-color', 'text-carbon');
 
-                // Renderizamos la foto real en el HTML
                 nuevaFoto.innerHTML = `
                     <div class="card-frame">
                         <img src="${uploadedImageUrl}" alt="Aporte" style="pointer-events: none; user-select: none;">
@@ -580,23 +625,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="card-author accent-script">${autorVal}</span>
                 `;
 
-                // Interacción de proyector 3D para la nueva foto
-                nuevaFoto.addEventListener('click', (e) => {
-                    let diffX = Math.abs(e.pageX - mouseStartClickX);
-                    let diffY = Math.abs(e.pageY - mouseStartClickY);
-                    if (diffX > 5 || diffY > 5) return; // Validación de drag
+                // Aquí le aplicamos el poder de ser arrastrada por todo el muro
+                HacerArrastrable(nuevaFoto);
 
-                    document.getElementById('p3dImg').setAttribute('src', uploadedImageUrl);
-                    document.getElementById('p3dAutor').innerText = autorVal.toUpperCase();
-                    document.getElementById('p3dNota').innerText = `"${notaVal}"`;
-                    document.getElementById('p3dBgColor').className = "proyector-face face-back bg-yellow text-carbon";
-                    proyector3D.classList.add('activo');
-                });
-
-                // Añadimos al DOM
                 muroContenido.appendChild(nuevaFoto);
 
-                // --- RESETEAR EL FORMULARIO PARA LA PRÓXIMA ---
                 document.getElementById('formAutor').value = '';
                 document.getElementById('formNota').value = '';
                 uploadedImageUrl = null;
