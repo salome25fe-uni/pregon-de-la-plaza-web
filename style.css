@@ -1,6 +1,68 @@
 /* ===============================
    IDENTIDAD VISUAL & TOKENS
    =============================== */
+/* ===============================
+   0. INSTALACIÓN DE FUENTES LOCALES
+   =============================== */
+@font-face {
+  font-family: 'Flegri';
+  src: url('fonts/Flegri.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Grota Rounded';
+  src: url('fonts/GrotaRounded.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pangram Sans';
+  src: url('fonts/PangramSans.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===============================
+   IDENTIDAD VISUAL & TOKENS
+   =============================== */
+:root {
+  /* --- 1. COLORES OFICIALES (HEX) --- */
+  --carbon: #353535;      
+  --bone:   #f7ecbc;      
+  --green:  #118a5f;      
+  --yellow: #f7c332;      
+  --red:    #de0636;      
+
+  /* --- 2. COLORES (RGB) PARA MANEJO DE OPACIDADES --- */
+  --rgb-carbon: 53, 53, 53;
+  --rgb-bone:   247, 236, 188;
+  --rgb-green:  17, 138, 95;
+  --rgb-yellow: 247, 195, 50;
+  --rgb-red:    222, 6, 54;
+
+  /* --- 3. VARIANTES DERIVADAS --- */
+  --carbon-light: #4a4a4a;
+  --green-dark:   #0d6b49;
+  --yellow-light: #f9d05a;
+  --red-dark:     #b5052c;
+
+  /* --- 4. TIPOGRAFÍAS DEL SISTEMA (ACTUALIZADAS) --- */
+  /* Flegri y Grota Rounded para los títulos y elementos de gran peso */
+  --font-disp: 'Flegri', 'Grota Rounded', 'Fredoka', sans-serif; 
+  
+  /* Pangram Sans para textos de lectura y complementos neutros */
+  --font-body: 'Pangram Sans', 'DM Sans', sans-serif; 
+  
+  /* Tipografía de acento (manual) */
+  --font-script: 'Yellowtail', cursive; 
+}
+
 
 :root {
   /* --- 1. COLORES OFICIALES (HEX) --- */
@@ -940,6 +1002,9 @@ p, h1, h2, h3, .texto-informativo {
   border: 2px solid var(--carbon);
   border-radius: 4px;
   margin-bottom: 20px;
+  /* Forzamos los colores aquí para evitar el camuflaje */
+  background-color: var(--red) !important;
+  color: var(--bone) !important;
 }
 
 .bg-yellow { background-color: var(--yellow); }
@@ -1976,14 +2041,20 @@ p, h1, h2, h3, .texto-informativo {
 }
 
 .scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Separación perfecta entre flecha y texto */
   font-family: var(--font-disp);
-  font-size: 13px;
-  color: var(--green);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--bone);
+  margin-top: 30px;
 }
 
 .arrow-down {
-  display: block;
-  font-size: 30px;
+  display: inline-block;
+  font-size: 28px;
+  color: var(--green); /* La flechita en verde plaza */
   animation: bounceDown 2s infinite;
 }
 
@@ -2552,3 +2623,480 @@ p, h1, h2, h3, .texto-informativo {
   
   .podcast-grid { grid-template-columns: 1fr; }
 } 
+
+/* ============================================
+   REDISEÑO: HERO DE CINE Y PERFILES DOCUMENTALES
+   ============================================ */
+
+/* --- Nuevo Hero: Portada Editorial --- */
+.cine-hero {
+  background: var(--carbon);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px; /* Debajo de la nav */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Marquesina del Hero */
+.cine-ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: var(--carbon);
+  border-bottom: 2px dashed rgba(var(--rgb-bone), 0.3);
+  padding: 10px 0;
+  display: flex;
+}
+.cine-ticker {
+  display: flex;
+  white-space: nowrap;
+  animation: tickerLoop 25s linear infinite;
+}
+.cine-ticker span {
+  flex-shrink: 0;
+  font-family: var(--font-disp);
+  font-size: 20px;
+  color: var(--bone);
+  letter-spacing: 0.1em;
+  padding-right: 20px;
+}
+
+.cine-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-grow: 1;
+}
+
+.cine-text-side {
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 2px solid rgba(var(--rgb-bone), 0.1);
+}
+
+.cine-title {
+  font-family: var(--font-disp);
+  font-size: clamp(60px, 8vw, 130px);
+  line-height: 0.8;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.cine-body {
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 500px;
+  color: rgba(var(--rgb-bone), 0.8);
+}
+
+.cine-visual-side {
+  position: relative;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cine-poster-img {
+  width: 100%;
+  height: 100%;
+  max-height: 700px;
+  object-fit: cover;
+  border: 4px solid var(--bone);
+  box-shadow: 20px 20px 0px rgba(0,0,0,0.5);
+  filter: grayscale(80%) contrast(1.2);
+  transition: filter 0.5s ease;
+  cursor: url('IMAGENES/fresa-cursor.png') 16 16, crosshair !important;
+}
+
+.cine-visual-side:hover .cine-poster-img {
+  filter: grayscale(0%) contrast(1.1);
+}
+
+.play-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--bone);
+  box-shadow: 5px 5px 0px var(--carbon);
+  pointer-events: none; /* Para que el hover de la foto funcione a través de él */
+  transition: transform 0.3s ease;
+}
+
+.cine-visual-side:hover .play-badge {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--yellow);
+}
+
+.play-triangle {
+  color: var(--bone);
+  font-size: 35px;
+  margin-left: 8px; /* Centra el triángulo visualmente */
+}
+
+
+/* ============================================
+   SECCIÓN CARRUSEL DOCUMENTAL
+   ============================================ */
+
+.capsulas-carrusel-section {
+  padding: 100px 40px;
+  background: var(--bone);
+  overflow: hidden; /* Evita scrolls horizontales raros */
+}
+
+.capsulas-header {
+  margin-bottom: 60px;
+}
+
+.capsulas-intro {
+  font-size: 19px;
+  max-width: 600px;
+  margin: 20px auto 0;
+  line-height: 1.6;
+}
+
+/* El Contenedor Maestro del Carrusel */
+.carrusel-master {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* La Ventana Visible (Corta lo que sobra) */
+.carrusel-viewport {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 15px 15px 0px var(--carbon);
+}
+
+/* La Pista (Donde se deslizan las cajas) */
+.carrusel-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  width: 100%;
+}
+
+/* Cada Diapositiva */
+.carrusel-slide {
+  min-width: 100%; /* Cada slide ocupa el 100% de la ventana */
+  box-sizing: border-box;
+}
+
+/* El Diseño Interno (Texto + Video) */
+.slide-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Video un poco más ancho que texto */
+  border: 4px solid var(--carbon);
+  background: var(--carbon);
+}
+
+.slide-texto {
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Perfecto para videos */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Botones del Carrusel */
+.carrusel-btn {
+  background: var(--carbon);
+  color: var(--bone);
+  border: 3px solid var(--carbon);
+  width: 70px;
+  height: 70px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.carrusel-btn:hover {
+  background: var(--green);
+  box-shadow: 6px 6px 0px var(--yellow);
+  transform: translateY(-5px);
+}
+
+.carrusel-btn:disabled {
+  background: rgba(var(--rgb-carbon), 0.2);
+  border-color: rgba(var(--rgb-carbon), 0.2);
+  color: var(--bone);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Puntos indicadores abajo */
+.carrusel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  background: rgba(var(--rgb-carbon), 0.2);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: var(--red);
+  transform: scale(1.3);
+  box-shadow: 2px 2px 0px var(--carbon);
+}
+
+/* Responsive del Carrusel */
+@media (max-width: 960px) {
+  .slide-layout { grid-template-columns: 1fr; }
+  .slide-video { order: -1; } /* Video arriba en celulares */
+  .carrusel-master { position: relative; gap: 0; }
+  
+  /* Botones flotantes sobre el video en móviles */
+  .carrusel-btn {
+    position: absolute;
+    top: 25%; /* Ajustado para quedar sobre el video */
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    z-index: 10;
+  }
+  .btn-prev { left: 10px; }
+  .btn-next { right: 10px; }
+}
+
+/* ============================================
+   SECCIÓN CARRUSEL DOCUMENTAL (CORREGIDO)
+   ============================================ */
+
+.capsulas-carrusel-section {
+  padding: 100px 40px;
+  background: var(--bone);
+  overflow: hidden;
+}
+
+/* --- El Header (Ya no es plano) --- */
+.capsulas-header {
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.capsulas-title {
+  font-family: var(--font-disp); /* Forzamos tu tipografía principal */
+  font-size: clamp(50px, 7vw, 90px);
+  line-height: 0.9;
+  color: var(--carbon);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.capsulas-intro {
+  font-size: 19px;
+  max-width: 600px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* --- El Carrusel Maestro --- */
+.carrusel-master {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.carrusel-viewport {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 15px 15px 0px var(--carbon);
+}
+
+/* La pista deslizable */
+.carrusel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* REGLA DE ORO: Cada slide es inamovible */
+.carrusel-slide {
+  flex: 0 0 100%; /* No crece, no se encoge, ocupa exactamente el 100% */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* El Layout de la tarjeta (Flexbox es más seguro aquí) */
+.slide-layout {
+  display: flex;
+  flex-direction: row;
+  border: 4px solid var(--carbon);
+  background: var(--carbon);
+  min-height: 450px; /* Le damos espacio para que quepa el texto de Mercasa */
+  align-items: stretch; /* Ambos lados miden lo mismo de alto */
+}
+
+.slide-texto {
+  flex: 1; /* Ocupa la mitad */
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-video {
+  flex: 1.2; /* Ocupa un poquito más de la mitad */
+  position: relative;
+  background: var(--carbon);
+  min-height: 300px; /* Seguro anti-colapso */
+}
+
+.slide-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Ajuste de tipografía interna para que no se salga */
+.cap-num {
+  font-family: var(--font-disp);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 15px;
+}
+
+.cap-cita {
+  font-family: var(--font-disp);
+  font-size: clamp(28px, 3.5vw, 42px); /* Reducido levemente para textos largos */
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.cap-personaje {
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed rgba(var(--rgb-carbon), 0.2);
+}
+
+.cap-contexto {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* --- Botones y Puntos --- */
+.carrusel-btn {
+  background: var(--carbon);
+  color: var(--bone);
+  border: 3px solid var(--carbon);
+  width: 70px;
+  height: 70px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.carrusel-btn:hover:not(:disabled) {
+  background: var(--green);
+  box-shadow: 6px 6px 0px var(--yellow);
+  transform: translateY(-5px);
+}
+
+.carrusel-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carrusel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  background: rgba(var(--rgb-carbon), 0.2);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: var(--red);
+  transform: scale(1.3);
+  box-shadow: 2px 2px 0px var(--carbon);
+}
+
+/* --- Responsive Móvil --- */
+@media (max-width: 960px) {
+  .slide-layout { flex-direction: column; }
+  .slide-video { flex: none; width: 100%; height: 300px; order: -1; }
+  .slide-texto { flex: none; width: 100%; padding: 40px 20px; }
+  .carrusel-master { position: relative; gap: 0; }
+  
+  .carrusel-btn {
+    position: absolute;
+    top: 125px; /* Mitad del video */
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    z-index: 10;
+  }
+  .btn-prev { left: 10px; }
+  .btn-next { right: 10px; }
+}

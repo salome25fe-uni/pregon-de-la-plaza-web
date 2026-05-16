@@ -350,3 +350,53 @@ document.addEventListener('DOMContentLoaded', () => {
             marker.bindPopup(popupHTML);
         });
     }
+
+    // ============================================
+    // 15. LÓGICA DEL CARRUSEL DE DOCUMENTALES
+    // ============================================
+    const track = document.getElementById('carruselTrack');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const dots = document.querySelectorAll('.carrusel-dots .dot');
+    
+    if (track && btnPrev && btnNext) {
+        let currentIndex = 0;
+        const totalSlides = 3; // Tenemos 3 documentales
+
+        // Función para mover el carrusel
+        const updateCarrusel = () => {
+            // Mueve la pista en porcentajes (-0%, -100%, -200%)
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Actualizar botones (Desactivar si llegas al límite)
+            btnPrev.disabled = currentIndex === 0;
+            btnNext.disabled = currentIndex === totalSlides - 1;
+
+            // Actualizar los puntitos de abajo
+            dots.forEach((dot, index) => {
+                if(index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        };
+
+        // Eventos de click
+        btnNext.addEventListener('click', () => {
+            if (currentIndex < totalSlides - 1) {
+                currentIndex++;
+                updateCarrusel();
+            }
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarrusel();
+            }
+        });
+
+        // Inicializar el estado de los botones al cargar
+        updateCarrusel();
+    }
