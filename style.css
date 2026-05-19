@@ -3774,6 +3774,7 @@ p, h1, h2, h3, .texto-informativo {
   transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--carbon);
 }
 
+
 /* Responsive modal */
 @media (max-width: 850px) {
   .modal-top-row { grid-template-columns: 1fr; }
